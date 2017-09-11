@@ -7,7 +7,7 @@ const Kitten = db.define('kitten', {
   name: {
     type: Sequelize.STRING,
     allowNull: false
-}
+    }
 })
 
 module.exports = Kitten;
