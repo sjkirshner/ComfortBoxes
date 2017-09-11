@@ -1,6 +1,5 @@
 
 const db = require('../_db.js');
-const Sequelize = require('sequelize');
 const Kitten = require('./Kitten');
 const Puppy = require('./Puppy');
 const User = require('./User');
