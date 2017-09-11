@@ -32,6 +32,47 @@ app.use(session({
   saveUninitialized: false
 }));
 
+const passport = require('passport');
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.serializeUser((user, done) => {
+  try {
+    done(null, user.id);
+  } catch (err) {
+    done(err);
+  }
+});
+
+const User = require('./models/User');
+passport.deserializeUser((id, done) => {
+  User.findById(id)
+    .then(user => done(null, user))
+    .catch(done);
+});
+
+//LOGIN / LOGOUT
+app.post('/login', (req, res, next) => {
+  User.findOne({
+    where: {
+      email: req.body.email
+    }
+  })
+    .then(user => {
+      if (!user) {
+        res.status(401).send('User not found');
+      } else if (!user.hasMatchingPassword(req.body.password)){
+        res.status(401).send('Incorrect password');
+      } else {
+        req.login(user, err => {
+          if (err) next(err);
+          else res.json(user);
+        });
+      }
+    })
+    .catch(next);
+});
 
 app.use('/api', require('./apiRoutes')); // matches all requests to /api
 
@@ -39,7 +80,7 @@ app.get('*', function (req, res) {
   res.sendFile(path.join(__dirname, '../index.html'));
 })
 
-
+//ERROR HANDLING
 app.use(function (err, req, res, next) {
   console.error(err);
   console.error(err.stack);
@@ -47,7 +88,8 @@ app.use(function (err, req, res, next) {
 });
 
 
-db.sync({force: true})  // sync our database
+// sync our database
+db.sync({force: true})
   .then(function(){
     console.log('Everything but the kitchen sync!')
     const port = process.env.PORT || 3000; // this can be very useful if you deploy to Heroku!
