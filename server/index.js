@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const path = require('path')
 const bodyParser = require('body-parser');
+const db = require('./_db.js');
 
 
 const morgan = require('morgan');
@@ -28,9 +29,15 @@ app.use(function (err, req, res, next) {
 });
 
 
-const port = process.env.PORT || 3000; // this can be very useful if you deploy to Heroku!
-app.listen(port, function () {
-  console.log("Knock, knock");
-  console.log("Who's there?");
-  console.log(`Your server, listening on port ${port}`);
-});
+db.sync()  // sync our database
+  .then(function(){
+    console.log('Everything but the kitchen sync!')
+    const port = process.env.PORT || 3000; // this can be very useful if you deploy to Heroku!
+    app.listen(port, function () {
+      console.log("Knock, knock");
+      console.log("Who's there?");
+      console.log(`Your server, listening on port ${port}`);
+    });
+  })
+
+
