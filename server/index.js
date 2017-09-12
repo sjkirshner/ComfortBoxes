@@ -1,81 +1,92 @@
-const express = require('express');
-const app = express();
 const path = require('path')
-const bodyParser = require('body-parser');
-const db = require('./_db.js');
+const express = require('express')
+const morgan = require('morgan')
+const bodyParser = require('body-parser')
+const session = require('express-session')
+const passport = require('passport')
+const SequelizeStore = require('connect-session-sequelize')(session.Store)
+const db = require('./db')
+const sessionStore = new SequelizeStore({db})
+const PORT = process.env.PORT || 8080
+const app = express()
+const socketio = require('socket.io')
+module.exports = app
 
-const morgan = require('morgan');
-app.use(morgan('dev'));
+/**
+ * In your development environment, you can keep all of your
+ * app's secret API keys in a file called `secrets.js`, in your project
+ * root. This file is included in the .gitignore - it will NOT be tracked
+ * or show up on Github. On your production server, you can add these
+ * keys as environment variables, so that they can still be read by the
+ * Node process on process.env
+ */
+if (process.env.NODE_ENV !== 'production') require('../secrets')
 
-
-app.use(express.static(path.join(__dirname, '../public')));
-
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-require('../secrets')
-const session = require('express-session');
-
-// configure and create our database store
-const SequelizeStore = require('connect-session-sequelize')(session.Store);
-const dbStore = new SequelizeStore({ db: db });
-
-// sync so that our session table gets created
-dbStore.sync();
-
-// plug the store into our session middleware
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  store: dbStore,
-  resave: false,
-  saveUninitialized: false
-}));
-
-const passport = require('passport');
-
-app.use(passport.initialize());
-app.use(passport.session());
-
-passport.serializeUser((user, done) => {
-  try {
-    done(null, user.id);
-  } catch (err) {
-    done(err);
-  }
-});
-
-const User = require('./models/User');
-passport.deserializeUser((id, done) => {
-  User.findById(id)
+// passport registration
+passport.serializeUser((user, done) => done(null, user.id))
+passport.deserializeUser((id, done) =>
+  db.models.user.findById(id)
     .then(user => done(null, user))
-    .catch(done);
-});
+    .catch(done))
 
-app.use('/api', require('./apiRoutes')); // matches all requests to /api
+const createApp = () => {
+  // logging middleware
+  app.use(morgan('dev'))
 
-app.get('*', function (req, res) {
-  res.sendFile(path.join(__dirname, '../index.html'));
-})
+  // body parsing middleware
+  app.use(bodyParser.json())
+  app.use(bodyParser.urlencoded({ extended: true }))
 
-//ERROR HANDLING
-app.use(function (err, req, res, next) {
-  console.error(err);
-  console.error(err.stack);
-  res.status(err.status || 500).send(err.message || 'Internal server error.');
-});
+  // session middleware with passport
+  app.use(session({
+    secret: process.env.SESSION_SECRET || 'my best friend is Cody',
+    store: sessionStore,
+    resave: false,
+    saveUninitialized: false
+  }))
+  app.use(passport.initialize())
+  app.use(passport.session())
 
+  // auth and api routes
+  app.use('/auth', require('./auth'))
+  app.use('/api', require('./api'))
 
-// sync our database
-db.sync({force: true})
-  .then(function(){
-    console.log('Everything but the kitchen sync!')
-    const port = process.env.PORT || 3000; // this can be very useful if you deploy to Heroku!
-    app.listen(port, function () {
-      console.log("Knock, knock");
-      console.log("Who's there?");
-      console.log(`Your server, listening on port ${port}`);
-    });
+  // static file-serving middleware
+  app.use(express.static(path.join(__dirname, '..', 'public')))
+
+  // sends index.html
+  app.use('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'public/index.html'))
   })
-  .catch(err => console.error(err))
 
+  // error handling endware
+  app.use((err, req, res, next) => {
+    console.error(err)
+    console.error(err.stack)
+    res.status(err.status || 500).send(err.message || 'Internal server error.')
+  })
+}
+
+const startListening = () => {
+  // start listening (and create a 'server' object representing our server)
+  const server = app.listen(PORT, () => console.log(`Mixing it up on port ${PORT}`))
+
+  // set up our socket control center
+  const io = socketio(server)
+  require('./socket')(io)
+}
+
+const syncDb = () => db.sync()
+
+// This evaluates as true when this file is run directly from the command line,
+// i.e. when we say 'node server/index.js' (or 'nodemon server/index.js', or 'nodemon server', etc)
+// It will evaluate false when this module is required by another module - for example,
+// if we wanted to require our app in a test spec
+if (require.main === module) {
+  sessionStore.sync()
+    .then(syncDb)
+    .then(createApp)
+    .then(startListening)
+} else {
+  createApp()
+}

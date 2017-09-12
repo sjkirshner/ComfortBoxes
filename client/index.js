@@ -1,13 +1,16 @@
-import './styles/index.scss';
+import './index.scss'
+import React from 'react'
+import ReactDOM from 'react-dom'
+import {Provider} from 'react-redux'
+import store from './store'
+import Routes from './routes'
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import store from './store';
+// establishes socket connection
+import './socket'
 
 ReactDOM.render(
   <Provider store={store}>
-    <div>Hello, FullstackTRIO! You rock!! WOO!!</div>
+    <Routes />
   </Provider>,
-  document.getElementById('main') // make sure this is the same as the id of the div in your index.html
-);
+  document.getElementById('app')
+)
