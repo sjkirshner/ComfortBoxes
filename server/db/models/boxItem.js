@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
+const Product = require('./product')
 
 //BoxItem lists the items that have been ordered and categorizes them by their respective boxes.
 
@@ -48,13 +49,10 @@ BoxItem.addProductsToBox = function (orderId, boxId, arrayOfProductIds) {
         product_id: productId
       }
     })
-      .spread((boxItem, createdInstanceBool) => {
-        if(createdInstanceBool) {
-          BoxItem.findById(boxItem.id)
-            .then((boxItem)=>{boxItem.addingProductInBox(productId)})
-        }
+      .then((boxItem) => {
+        boxItem.addingProductInBox(productId)
       })
-  })// SARA: figure out else statement
+  })// SARA: figure out proper way to update instance or call instance method. Can you do it on the return of findOrCreate object or do you need to frame it some other way?
 
 }
 
