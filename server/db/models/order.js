@@ -1,63 +1,37 @@
-
 const Sequelize = require('sequelize')
 const db = require('../db')
 
-const User = db.define('user', {
-  email: {
-    type: Sequelize.STRING,
-    unique: true,
-    allowNull: false
+const Order = db.define('order', {
+  sessionId: {
+    type: Sequelize.TEXT,
+    validate: {
+      min: 5
+    }
   },
-  password: {
-    type: Sequelize.STRING
-  },
-  salt: {
-    type: Sequelize.STRING
-  },
-  googleId: {
-    type: Sequelize.STRING
+  status: {
+    type: Sequelize.ENUM,
+    values: ['created', 'processing', 'cancelled', 'completed']
   }
 })
-
-module.exports = User
+//Order table has 2 foreign keys: user_id and product_id, and is referenced in BoxItem table
+module.exports = Order
 
 /**
  * instanceMethods
  */
-User.prototype.correctPassword = function (candidatePwd) {
-  return User.encryptPassword(candidatePwd, this.salt) === this.password
-}
+
+
+
 
 /**
  * classMethods
  */
-User.generateSalt = function () {
-  return crypto.randomBytes(16).toString('base64')
-}
 
-User.encryptPassword = function (plainText, salt) {
-  return crypto.createHash('sha1').update(plainText).update(salt).digest('hex')
-}
+
+
+
 
 /**
  * hooks
  */
-const setSaltAndPassword = user => {
-  if (user.changed('password')) {
-    user.salt = User.generateSalt()
-    user.password = User.encryptPassword(user.password, user.salt)
-  }
-}
 
-User.beforeCreate(setSaltAndPassword)
-User.beforeUpdate(setSaltAndPassword)
-
-
-
-
-
-
-status: {
-  type: Sequelize.ENUM,
-  values: ['created', 'processing', 'cancelled', 'completed']
-}

@@ -25,7 +25,7 @@ const User = db.define('user', {
     defaultValue: true
   }
 })
-
+//User table has no foreign keys, but can be referenced in Review and Order tables
 module.exports = User
 
 /**

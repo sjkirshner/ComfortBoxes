@@ -1,52 +1,50 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
 
-const User = db.define('user', {
-  email: {
+const Product = db.define('product', {
+  title: {
+    type: Sequelize.STRING
+  },
+  price: {
+    type: Sequelize.INTEGER
+  },
+  description: {
+    type: Sequelize.TEXT
+  },
+  img: {
     type: Sequelize.STRING,
-    unique: true,
-    allowNull: false
+    defaultValue: 'http://www.thecellartrust.org/wp-content/uploads/2016/04/Product-Image-Coming-Soon.png',
+    validate: {
+      isUrl: true
+    }
   },
-  password: {
-    type: Sequelize.STRING
+  inventoryQuantity: {
+    type: Sequelize.INTEGER
   },
-  salt: {
-    type: Sequelize.STRING
+  Available: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: true
   },
-  googleId: {
-    type: Sequelize.STRING
-  }
 })
-
-module.exports = User
+//Product table has no foreign keys, but can be referenced in Product_Category, Review, and BoxItem tables
+module.exports = Product
 
 /**
  * instanceMethods
  */
-User.prototype.correctPassword = function (candidatePwd) {
-  return User.encryptPassword(candidatePwd, this.salt) === this.password
-}
+
+
+
 
 /**
  * classMethods
  */
-User.generateSalt = function () {
-  return crypto.randomBytes(16).toString('base64')
-}
 
-User.encryptPassword = function (plainText, salt) {
-  return crypto.createHash('sha1').update(plainText).update(salt).digest('hex')
-}
+
+
+
 
 /**
  * hooks
  */
-const setSaltAndPassword = user => {
-  if (user.changed('password')) {
-    user.salt = User.generateSalt()
-    user.password = User.encryptPassword(user.password, user.salt)
-  }
-}
 
-User.beforeCreate(setSaltAndPassword)
-User.beforeUpdate(setSaltAndPassword)
