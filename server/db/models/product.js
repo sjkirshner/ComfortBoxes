@@ -15,7 +15,7 @@ const Product = db.define('product', {
     type: Sequelize.STRING,
     defaultValue: 'http://www.thecellartrust.org/wp-content/uploads/2016/04/Product-Image-Coming-Soon.png',
     validate: {
-      isUrl: true
+      //isUrl: true
     }
   },
   inventoryQuantity: {
