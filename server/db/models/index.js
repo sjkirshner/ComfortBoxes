@@ -9,12 +9,20 @@ const User = require('./user')
  */
 
 Review.belongsTo(User, {foreignKey: 'user_id'});
+User.hasMany(Review, {foreignKey: 'user_id'});
+
 Review.belongsTo(Product, {foreignKey: 'product_id'});
+Product.hasMany(Review, {foreignKey: 'product_id'});
 
 Order.belongsTo(User, {foreignKey: 'user_id'});
+User.hasMany(Order, {foreignKey: 'user_id'});
 
 BoxItem.belongsTo(Product, {foreignKey: 'product_id'});
+Product.hasMany(BoxItem, {foreignKey: 'product_id'});
+
 BoxItem.belongsTo(Order, {foreignKey: 'order_id'});
+Order.hasMany(BoxItem, {foreignKey: 'order_id'});
+
 
 Category.belongsToMany(Product, {through: 'product_category', foreignKey: 'product_id'});
 Product.belongsToMany(Category, {through: 'product_category', foreignKey: 'category_id'});
