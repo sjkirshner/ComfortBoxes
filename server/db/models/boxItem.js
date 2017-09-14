@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
 const Product = require('./product')
+const Order = require('./order')
 
 //BoxItem lists the items that have been ordered and categorizes them by their respective boxes.
 
@@ -25,35 +26,33 @@ module.exports = BoxItem
 /**
  * instanceMethods
  */
-BoxItem.prototype.addingProductInBox = function (productId) {
-  this.productQuantityInBox += 1;
-  this.productPrice = this.productPrice.bind(this)
-  Product.findById(productId)
-    .then((product) => {
-      this.productPrice += product.price
-    })
-}
-
 
 
 /**
  * classMethods
  */
 
-BoxItem.addProductsToBox = function (orderId, boxId, arrayOfProductIds) {
+ //BoxItem.addProductsToBox is called by Order.addItemsToOrder and returns order that items were added to.
+BoxItem.addProductsToBox = function (arrayOfProductIds, order, boxId) {
   arrayOfProductIds.forEach((productId) => {
-    BoxItem.findOrCreate({
-      where: {
-        order_id: orderId,
-        boxId,
-        product_id: productId
-      }
-    })
-      .then((boxItem) => {
-        boxItem.addingProductInBox(productId)
+    const promiseArray = [
+      BoxItem.findOrCreate({
+        where: {
+          order_id: order.id,
+          boxId,
+          product_id: productId
+        }
+      }),
+      Product.findById(productId)
+    ]
+    Promise.all(promiseArray)
+      .spread((boxItem, product) => {
+        boxItem.productQuantityInBox += 1;
+        boxItem.productPrice += product.price;
+        boxItem.save();
       })
-  })// SARA: figure out proper way to update instance or call instance method. Can you do it on the return of findOrCreate object or do you need to frame it some other way?
-
+  })
+  return order;
 }
 
 
