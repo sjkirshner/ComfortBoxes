@@ -55,6 +55,27 @@ BoxItem.addProductsToBox = function (arrayOfProductIds, order, boxId) {
   return order;
 }
 
+ //BoxItem.removeProductFromBox removes item from order and returns order that items were removed from.
+BoxItem.removeProductFromBox = function (productId, order, boxId) {
+  const promiseArray = [
+    BoxItem.findOne({
+      where: {
+        order_id: order.id,
+        boxId,
+        product_id: productId
+      }
+    }),
+    Product.findById(productId)
+  ]
+  Promise.all(promiseArray)
+    .spread((boxItem, product) => {
+      boxItem.productQuantityInBox -= 1;
+      boxItem.productPrice -= product.price;
+      boxItem.save();
+    })
+  return order;
+}
+
 
 
 /**
