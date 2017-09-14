@@ -1,10 +1,11 @@
-@import './normalize.css';
-@import './colors.scss';
-@import './navbar.scss';
+@import './normalize.css';  //Reset to default styling
+@import './skeleton.css';
+@import './colors.scss';    //Color variables
+@import './navbar.scss';    //Styling for navbar
+@import './buildbox.scss';  //Styling for buildbox page
 
 .page {
   padding-top: 100px;
-  height: 100vh;
   background-color: lightgrey;
 }
 
@@ -13,23 +14,5 @@
   background-size: cover;
 }
 
-#buildboxPage {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
 
-  .productList {
-    display: flex;
-    flex-wrap: wrap;
-  }
-
-  .product {
-    width: 200px;
-
-    img {
-      max-width: 200px;
-    }
-  }
-}
 

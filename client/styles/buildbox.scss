@@ -1,0 +1,36 @@
+#buildboxPage {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+
+  .productList,
+  .categoryList {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 3em 0;
+  }
+
+  .product,
+  .category {
+    width: 200px;
+    background-color: white;
+    padding: 5px;
+    margin: 5px;
+    box-shadow: 0 0 5px black;
+    text-align: center;
+
+    img {
+      width: inherit;
+    }
+  }
+
+  .category {
+    width: 16%;
+
+    img {
+      width: 100px;
+    }
+  }
+}
