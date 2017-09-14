@@ -1,0 +1,45 @@
+@import './normalize.css';
+
+$mainColor: #3F5C9A;
+
+.navbar {
+  background-color: $mainColor;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  position: fixed;
+  left: 0; right: 0;
+  height: 50px;
+  padding: 5px;
+  box-shadow: 0 0 10px black;
+
+  .nav {
+    display: flex;
+    justify-content: space-around;
+    width: 400px;
+  }
+
+  a {
+    text-decoration: none;
+    color: white;
+    display: inline-block;
+    padding: 1em;
+    border-radius: 10px;
+
+    &:hover {
+      background-color: white;
+      color: $mainColor;
+    }
+  }
+}
+
+.page {
+  padding-top: 100px;
+  height: 100vh;
+  background-color: lightgrey;
+}
+
+.home {
+  background-image: url('https://blog.mrprintables.com/wp-content/uploads/2013/10/1_Instant_Comfort_pocket_box_craft_little_gatherer.jpg');
+  background-size: cover;
+}
