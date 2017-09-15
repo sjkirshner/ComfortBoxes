@@ -5,27 +5,27 @@ const db = require('../index');
 const Category = db.model('category');
 const Product = db.model('product');
 
-describe('Category model', () => {
-
-  let myCategory;
+describe.only('Category model', () => {
 
   beforeEach(() => {
     return db.sync({force: true})
     .then(() => {
       const categoryPromise = Category.create({ title: 'hey' });
       const productPromise = Product.create({title: 'heyProduct'});
+
       return Promise.all([categoryPromise, productPromise])
       .then(([categoryItem, productItem]) => {
-        categoryItem.addProduct(productItem);
-        productItem.addCategory(categoryItem);
-        myCategory = categoryItem;
+        return categoryItem.addProduct(productItem);
       })
     })
   });
 
 
-  it.only('has product scope', () => {
-    console.log(myCategory)
-    expect(myCategory.dataValues.title).to.equal('hey');
+  it('has product default scope', () => {
+    return Category.findOne({ where: { title: 'hey' }})
+    .then( myCategory => {
+      expect(myCategory.dataValues.products[0].title).to.equal('heyProduct');
+
+    })
   })
 })

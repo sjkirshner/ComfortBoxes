@@ -24,8 +24,8 @@ BoxItem.belongsTo(Order, {foreignKey: 'order_id'});
 Order.hasMany(BoxItem, {foreignKey: 'order_id'});
 
 
-Category.belongsToMany(Product, {through: 'product_category', foreignKey: 'product_id'});
-Product.belongsToMany(Category, {through: 'product_category', foreignKey: 'category_id'});
+Category.belongsToMany(Product, {through: 'product_category', foreignKey: 'category_id'});
+Product.belongsToMany(Category, {through: 'product_category', foreignKey: 'product_id'});
 
 /**
  * We're exporting all of our models here, so that any time a module needs a model,
