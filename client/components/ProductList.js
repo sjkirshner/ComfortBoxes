@@ -13,30 +13,28 @@ export default function ProductList ({categories}) {
   return (
     <Switch>
       {
-        ['Box', 'Sights', 'Tastes', 'Smells', 'Touch', 'Sound'].map((category, i) =>
+        categories.map((category, i) =>
           <Route
             key={i}
-            path={`/buildbox/${category}`}
+            path={`/buildbox/${category.title}`}
             render={() => <Products category={category} />}
           />
         )
       }
-      <Route render={() => <Products category={'Box'} />}/>
     </Switch>
   );
 }
 
 function Products ({category}) {
+  console.log(category)
   return (
     <div className='productList'>
       {
-        [1,2,3,4,5,6,7,8].map(i => {
+        category.products.map(product => {
           return (
-            <div key={i} className='product'>
-              <img
-              src='https://blog.mrprintables.com/wp-content/uploads/2013/10/1_Instant_Comfort_pocket_box_craft_little_gatherer.jpg'
-              alt='product_image'/>
-              <div>{category} Product</div>
+            <div key={product.id} className='product'>
+              <img src={product.img}/>
+              <div>{product.title}</div>
               <button>Add</button>
             </div>
           )

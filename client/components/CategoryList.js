@@ -10,11 +10,11 @@ export default function CategoryList ({categories}) {
   return (
     <div className='categoryList'>
       {
-        ['Box', 'Sights', 'Tastes', 'Smells', 'Touch', 'Sound'].map((title, i) =>
+        categories.map((category, i) =>
           <Link
             key={i}
-            to={`/buildbox/${title}`}>
-            {title}
+            to={`/buildbox/${category.title}`}>
+            {category.title}
           </Link>
         )
       }
