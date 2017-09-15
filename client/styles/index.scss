@@ -4,9 +4,9 @@
 @import './navbar.scss';    //Styling for navbar
 @import './buildbox.scss';  //Styling for buildbox page
 
-.page {
+body {
   padding-top: 100px;
-  background-color: lightgrey;
+  background-color: $backgroundColor;
 }
 
 .home {

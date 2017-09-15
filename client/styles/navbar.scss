@@ -1,13 +1,11 @@
 .navbar {
-  background-color: $mainColor;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   position: fixed;
-  left: 0; right: 0;
+  left: 0; right: 0; top: 0;
   height: 50px;
   padding: 5px;
-  box-shadow: 0 0 10px black;
 
   .nav {
     display: flex;
@@ -17,14 +15,9 @@
 
   a {
     text-decoration: none;
-    color: white;
+    color: #222;
     display: inline-block;
     padding: 1em;
     border-radius: 10px;
-
-    &:hover {
-      background-color: white;
-      color: $mainColor;
-    }
   }
 }

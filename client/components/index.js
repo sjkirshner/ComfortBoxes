@@ -1,5 +1,4 @@
-export {default as BuildBox} from './BuildBox';
-export {default as Home} from './Home';
-export {default as Login} from './Login';
 export {default as Navbar} from './Navbar';
-export {default as SignUp } from './SignUp';
+export {default as TestPage } from './TestPage';
+export {default as CategoryList } from './CategoryList';
+export {default as ProductList } from './ProductList';
