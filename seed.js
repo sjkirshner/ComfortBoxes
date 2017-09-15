@@ -109,7 +109,7 @@ const reviews = reviewContentArr.map(reviewContent => {
 let seededBoxProducts, seededSightProducts, seededSmellProducts, seededTouchProducts, seededTasteProducts, seededSoundProducts, seededCategories
 
 
-// The seeding promise chain that just won't quit
+// The seeding promise chain that just won't quit.
 
 const seed = () =>
   Promise.all(boxProducts.map(boxProduct =>
@@ -173,8 +173,8 @@ const seed = () =>
   // )
 
   .then(() =>
-    Promise.all(categories.map(cat =>
-      Category.create(cat)
+    Promise.all(categories.map(category =>
+      Category.create(category)
     ))
   )
   .then((createdCategories) =>
