@@ -74,3 +74,26 @@ export default class BuildBox extends Component {
 // }
 
 // export default connect(mapStateToProps, mapDispatchToProps)(BuildBox);
+
+
+//WHEN A BOX IS BEING CREATED (A BOX PRODUCT IS ADDED TO CART), WE NEED TO CREATE A BOX IN THE SHOPPING CART. IN ORDER TO DO THIS, WE SHOULD RUN THE FOLLOWING CODE, passing in the box product's product id:
+function createBoxInShoppingCart(boxProductId){
+  let boxId = 1 + (Number(localStorage.getItem('numberOfBoxes')));
+  localStorage.setItem(`box${boxId}ProductIds`, boxProductId)
+  localStorage.setItem('numberOfBoxes', boxId);
+  localStorage.setItem('currentBoxId', boxId)
+}
+
+//WHEN A NEW PRODUCT IS BEING ADDED TO A BOX, RUN THE FOLLOWING FUNCTION (passing in added product's productId):
+function addProductToBox(productId) {
+
+}
+
+// TO ADD PRODUCT ID TO BOX IN SHOPPING CART
+//NOTES FOR OTHER LOCAL STORAGE ITEMS THAT WILL BE FORMATTED AS box{x}ProductIds:
+//example of box{x}ProductIds that will be created each time a new box is created:
+// localStorage.setItem('box1ProductIds', '')
+//note that localStore values only accept strings, so when adding items to individual box (box{x}ProductIds), add a comma and new product id to current list:
+// List will then look like: '14,7,12,8'.
+// And each time a new box is added, set a new box{x}ProductIds localStorage item, with x being equal to:
+//  Number(localStorage.getItem('numberOfBoxes')) +1

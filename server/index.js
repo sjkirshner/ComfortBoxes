@@ -47,6 +47,17 @@ const createApp = () => {
   app.use(passport.initialize())
   app.use(passport.session())
 
+//create local storage empty shopping cart
+localStorage.setItem('numberOfBoxes', '0');
+//NOTES FOR OTHER LOCAL STORAGE ITEMS THAT WILL BE FORMATTED AS box{x}ProductIds:
+//example of box{x}ProductIds that will be created each time a new box is created:
+// localStorage.setItem('box1ProductIds', '')
+//note that localStore values only accept strings, so when adding items to individual box (box{x}ProductIds), add a comma and new product id to current list:
+// List will then look like: '14,7,12,8'.
+// And each time a new box is added, set a new box{x}ProductIds localStorage item, with x being equal to:
+//  (Number(localStorage.getItem('numberOfBoxes'))) +1
+
+
   // auth and api routes
   app.use('/auth', require('./auth'))
   app.use('/api', require('./api'))
