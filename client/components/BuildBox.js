@@ -1,14 +1,23 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import { Link, Route, Switch } from 'react-router-dom';
 import { fetchCategories } from '../store/categories';
 import ProductList from './ProductList';
+import CategoryList from './CategoryList';
 
 //BUILD BOX CONTAINER
-//displays all categories and products for a selected category
+/**
+ * BUILD BOX CONTAINER
+ *
+ * displays category list: <CategoryList />
+ * displays product list corresponding to selected category: <ProductList />
+ *
+ * mapSTP: Fetches categories array from store
+ * mapDTP: brings in thunk that populates category list in DB
+ *
+ */
 export class BuildBox extends Component {
   componentDidMount () {
-    // fetch categories
+    // fetch categories from DB
     this.props.fetchCategories();
   }
 
@@ -16,30 +25,8 @@ export class BuildBox extends Component {
     console.log(this.props.categories);
     return (
       <div id='buildboxPage'>
-        <div className='categoryList'>
-          {
-            ['Box', 'Sights', 'Tastes', 'Smells', 'Touch', 'Sound'].map((title, i) => {
-              return (
-                  <Link
-                    key={i}
-                    to={`/buildbox/${title}`}>
-                    {title}
-                  </Link>
-              )
-            })
-          }
-        </div>
-        <Switch>
-          {
-            ['Box', 'Sights', 'Tastes', 'Smells', 'Touch', 'Sound'].map((title, i) =>
-              <Route
-                key={i}
-                path={`/buildbox/${title}`}
-                render={() => <ProductList category={title} />}
-              />
-            )
-          }
-        </Switch>
+        <CategoryList categories={this.props.categories} />
+        <ProductList categories={this.props.categories} />
       </div>
     );
   }
