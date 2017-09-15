@@ -4,10 +4,7 @@ const BoxItem = require('./boxItem')
 
 const Order = db.define('order', {
   sessionId: {
-    type: Sequelize.TEXT,
-    validate: {
-      min: 5
-    }
+    type: Sequelize.STRING
   },
   status: {
     type: Sequelize.ENUM,

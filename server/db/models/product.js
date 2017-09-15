@@ -6,7 +6,15 @@ const Product = db.define('product', {
     type: Sequelize.STRING
   },
   price: {
-    type: Sequelize.INTEGER
+    type: Sequelize.INTEGER,
+    get() {
+      // this getter changes price value from cents in database to dollars and cents as returned value when 'getting' Product.price
+      return this.getDataValue('price') / 100;
+    },
+    set(cost) {
+       // this setter changes price value from dollars and cents being passed in to cents in database when 'setting' Product.price
+      this.setDataValue('price', cost * 100);
+    }
   },
   description: {
     type: Sequelize.TEXT
@@ -19,9 +27,12 @@ const Product = db.define('product', {
     }
   },
   inventoryQuantity: {
-    type: Sequelize.INTEGER
+    type: Sequelize.INTEGER,
+    validate: {
+      min: 0
+    }
   },
-  Available: {
+  available: {
     type: Sequelize.BOOLEAN,
     defaultValue: true
   },

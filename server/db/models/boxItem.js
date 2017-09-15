@@ -15,7 +15,10 @@ const BoxItem = db.define('boxItem', {
   },
   productQuantityInBox: {
     type: Sequelize.INTEGER,
-    defaultValue: 0
+    defaultValue: 0,
+    validate: {
+      min: 0
+    }
   }
 })
 //BoxItem table has 2 foreign keys: order_id and product_id, but is not referenced in other tables
