@@ -1,19 +1,29 @@
 const db = require('./server/db');
 require('./server/db/models');
-const Category = require('./server/db/models/product');
+const Category = require('./server/db/models/category');
 const Product = require('./server/db/models/product');
 const User = require('./server/db/models/user');
 const Order = require('./server/db/models/order');
-const Review = require('./server/db/models/user');
+const Review = require('./server/db/models/review');
 
 const categories = [
-  { title: 'Boxiness'},
+  { title: 'Box'},
   { title: 'Sight'},
   { title: 'Taste'},
   { title: 'Touch'},
   { title: 'Sound'},
   { title: 'Smell'}
 ]
+
+
+const users = [
+  {email: 'jorblgoo@joe.com', password: 'ruih3419r83y41W8r3y' },
+  {email: 'numphy@kex.com', password: 'cbphjds3812' },
+  {email: 'jim@magicness.com', password: 'equifbwejl3f5dmscsnds' },
+  {email: 'eternalfonz@man.com', password: 'fiekqubjwcdkwdnmflen2325' },
+  {email: 'minz@zorba.com', password: 'dycbJHjqdmbedk4nsj2' }
+]
+
 
 const boxDescription = 'Boxes may be made of durable materials such as wood or metal, or of corrugated fiberboard, paperboard, or other non-durable materials. The size may vary from very small (e.g., a matchbox) to the size of a large appliance. A corrugated box is a very common shipping container. When no specific shape is described, a box of rectangular cross-section with all sides flat may be expected, but a box may have a horizontal cross section that is square, elongated, round or oval; sloped or domed top surfaces, or vertical edges.'
 
@@ -24,7 +34,7 @@ const boxProducts = [
   {title: 'Jade Butterfly Box', price: 15, description: boxDescription, img: 'img/box/1.jpg', inventoryQuantity: Math.floor(Math.random() * 100)},
   {title: 'Eastern Connection Box', price: 12, description: boxDescription, img: 'img/box/2.jpg', inventoryQuantity: Math.floor(Math.random() * 100)},
   {title: 'The Contents Of My Heart Box', price: 17, description: boxDescription, img: 'img/box/3.jpg', inventoryQuantity: Math.floor(Math.random() * 100)},
-  {title: 'Pastel Pleasure Box', price: 13, description: boxDescription, img: 'img/box/4.jpg', inventoryQuantity: Math.floor(Math.random() * 100)},
+  {title: 'Pleasing Pastel Box', price: 13, description: boxDescription, img: 'img/box/4.jpg', inventoryQuantity: Math.floor(Math.random() * 100)},
   {title: 'Geometric Comfort Box', price: 10, description: boxDescription, img: 'img/box/5.jpg', inventoryQuantity: Math.floor(Math.random() * 100)},
   {title: 'Hexagon Hat Box', price: 10, description: boxDescription, img: 'img/box/6.jpg', inventoryQuantity: Math.floor(Math.random() * 100)},
   {title: 'Nature Is Texture Box', price: 22, description: boxDescription, img: 'img/box/7.jpg', inventoryQuantity: Math.floor(Math.random() * 100)},
@@ -87,10 +97,19 @@ const soundProducts = ['Calming', 'Magical', 'Soothing', 'Ethereal', 'Yoga', 'Tr
 
 
 
-//const products = [ [...boxProducts], [...sightProducts], [...smellProducts],]
+const products = [ [...boxProducts], [...sightProducts], [...smellProducts], [...tasteProducts], [...soundProducts], [...touchProducts]]
 
-let seededBoxProducts, seededSightProducts, seededSmellProducts, seededTouchProducts, seededTasteProducts, seededSoundProducts
+const reviewContentArr = ['These people put the "uncomfortable" in comfort boxes', 'I sleep with this product under my pillow. Wonderful!', 'It\'s OK I guess', 'Some reviews are better than others', 'The rain in Spain stays mainly in the plains']
 
+const reviews = reviewContentArr.map(reviewContent => {
+  return {content: reviewContent, user_id: Math.floor(Math.random() * users.length)}
+})
+
+
+let seededBoxProducts, seededSightProducts, seededSmellProducts, seededTouchProducts, seededTasteProducts, seededSoundProducts, seededCategories
+
+
+// The seeding promise chain that just won't quit
 
 const seed = () =>
   Promise.all(boxProducts.map(boxProduct =>
@@ -136,17 +155,37 @@ const seed = () =>
     Product.create(soundProduct)
     ))
   )
-  .then((createdSoundProducts) => {
+  .then((createdSoundProducts) =>
     seededSoundProducts = createdSoundProducts
-  })
+  )
   .then(() =>
-    Promise.all(categories.map(category =>
-      Category.create(category)
+    Promise.all(users.map(user =>
+      User.create(user)
     ))
   )
-  // .then((createdCategories) =>
-  //   Promise.all(seededBoxProducts.map(boxProduct =>
-  //     boxProduct.addCategory(createdCategories[0], { through: 'product_category' })
+
+  // Getting an error on creating reviews, need to update reviews to use sequelize association methods
+
+  // .then(() =>
+  //   Promise.all(reviews.map(review =>
+  //     Review.create(review)
+  //   ))
+  // )
+
+  .then(() =>
+    Promise.all(categories.map(cat =>
+      Category.create(cat)
+    ))
+  )
+  .then((createdCategories) =>
+    seededCategories = createdCategories
+  )
+
+// No error messages on product_category seeding, however it's swapping the id's when putting in the table. Need to troubleshoot this further
+
+  // .then(() =>
+  // Promise.all(seededBoxProducts.map(boxProduct =>
+  //     boxProduct.addCategory(seededCategories[0], { through: 'product_category' })
   //   ))
   // )
 
