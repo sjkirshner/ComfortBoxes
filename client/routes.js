@@ -2,7 +2,8 @@ import history from './history';
 import React, {Component} from 'react'
 import {Router} from 'react-router'
 import {Route, Switch} from 'react-router-dom'
-import { Navbar, Login, SignUp, Home, BuildBox } from './components'
+import { Navbar, TestPage } from './components'
+import { BuildBox } from './containers'
 
 /**
  * COMPONENT
@@ -15,10 +16,16 @@ export default class Routes extends Component {
           <Navbar />
           <Switch>
             {/* Routes placed here are available to all visitors */}
-            <Route path='/login' component={Login} />
-            <Route path='/signup' component={SignUp} />
+            <Route
+              path='/login'
+              render={()=><TestPage pageName={'Login Page'}/>} />
+            <Route
+              path='/signup'
+              render={()=><TestPage pageName={'Signup Page'}/>} />
             <Route path='/buildbox' component={BuildBox} />
-            <Route path='/' component={Home} />
+            <Route
+              path='/'
+              render={()=><TestPage pageName={'Home Page'}/>} />
           </Switch>
         </div>
       </Router>

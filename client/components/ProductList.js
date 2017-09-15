@@ -21,6 +21,7 @@ export default function ProductList ({categories}) {
           />
         )
       }
+      <Route render={() => <Products category={'Box'} />}/>
     </Switch>
   );
 }

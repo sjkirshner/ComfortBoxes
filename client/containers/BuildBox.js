@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { fetchCategories } from '../store/categories';
-import ProductList from './ProductList';
-import CategoryList from './CategoryList';
+import {
+  ProductList,
+  CategoryList,
+} from '../components';
 
 //BUILD BOX CONTAINER
 /**
