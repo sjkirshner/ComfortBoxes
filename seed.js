@@ -96,7 +96,6 @@ const soundProducts = ['Calming', 'Magical', 'Soothing', 'Ethereal', 'Yoga', 'Tr
 })
 
 
-
 const products = [ [...boxProducts], [...sightProducts], [...smellProducts], [...tasteProducts], [...soundProducts], [...touchProducts]]
 
 const reviewContentArr = ['These people put the "uncomfortable" in comfort boxes', 'I sleep with this product under my pillow. Wonderful!', 'It\'s OK I guess', 'Some reviews are better than others', 'The rain in Spain stays mainly in the plains']
@@ -105,6 +104,12 @@ const reviews = reviewContentArr.map(reviewContent => {
   return {content: reviewContent}
 })
 
+const orders = []
+for (var i = 0; i < 40; i++) {
+  orders.push({status: ['created', 'processing', 'cancelled', 'completed'][Math.floor(Math.random() * 4)]})
+}
+
+// console.log("orders-test", orders)
 
 let seededBoxProducts, seededSightProducts, seededSmellProducts, seededTouchProducts, seededTasteProducts, seededSoundProducts, seededCategories
 
@@ -112,6 +117,9 @@ let seededBoxProducts, seededSightProducts, seededSmellProducts, seededTouchProd
 // The seeding promise chain that just won't quit.
 
 const seed = () =>
+
+//Products
+
   Promise.all(boxProducts.map(boxProduct =>
     Product.create(boxProduct)
   ))
@@ -158,9 +166,20 @@ const seed = () =>
   .then((createdSoundProducts) =>
     seededSoundProducts = createdSoundProducts
   )
+
+  // Users
+
   .then(() =>
     Promise.all(users.map(user =>
       User.create(user)
+    ))
+  )
+
+  // Orders
+
+  .then((createdUsers) =>
+    Promise.all(orders.map(order =>
+      createdUsers[Math.floor(Math.random() * createdUsers.length)].createOrder(order)
     ))
   )
 
@@ -183,16 +202,41 @@ const seed = () =>
 
 // No error messages on product_category seeding, however it's swapping the id's when putting in the table. Need to troubleshoot this further
 
-  // .then(() =>
-  // Promise.all(seededBoxProducts.map(boxProduct =>
-  //     boxProduct.addCategory(seededCategories[0], { through: 'product_category' })
-  //   ))
-  // )
+  .then(() =>
+  Promise.all(seededBoxProducts.map(boxProduct =>
+      boxProduct.addCategory(seededCategories[0], { through: 'product_category' })
+    ))
+  )
+  .then(() =>
+  Promise.all(seededSightProducts.map(sightProduct =>
+      sightProduct.addCategory(seededCategories[1], { through: 'product_category' })
+    ))
+  )
+  .then(() =>
+  Promise.all(seededTasteProducts.map(tasteProduct =>
+      tasteProduct.addCategory(seededCategories[2], { through: 'product_category' })
+    ))
+  )
+  .then(() =>
+  Promise.all(seededTouchProducts.map(touchProduct =>
+      touchProduct.addCategory(seededCategories[3], { through: 'product_category' })
+    ))
+  )
+  .then(() =>
+  Promise.all(seededSoundProducts.map(soundProduct =>
+      soundProduct.addCategory(seededCategories[4], { through: 'product_category' })
+    ))
+  )
+  .then(() =>
+  Promise.all(seededSmellProducts.map(smellProduct =>
+      smellProduct.addCategory(seededCategories[5], { through: 'product_category' })
+    ))
+  )
 
 
 const main = () => {
   console.log('Syncing db...');
-  db.sync()
+  db.sync({force: true})
     .then(() => {
       console.log('Seeding databse...');
       return seed();
