@@ -65,7 +65,7 @@ const smellProducts = [
   {title: 'Berry-Scented Candle', price: 8, description: 'This scent is berry delicious', img: 'img/smell/1.jpg', inventoryQuantity: Math.floor(Math.random() * 100)},
   {title: 'Cherry Blossom Perfurme', price: 13, description: 'Spray and step into the cherry blossom grove', img: 'img/smell/2.jpg', inventoryQuantity: Math.floor(Math.random() * 100)},
   {title: 'Lavendar Pot Pourri', price: 8, description: 'Luxuriate in the luscious scent of lavendar', img: 'img/smell/3.jpg', inventoryQuantity: Math.floor(Math.random() * 100)},
-  {title: 'Lemongrass Scented Oil', price: 11, description: 'It\'s not lemon, it\'s not grass - it\'s lemongrass!', img: 'img/smell/4.jpg', inventoryQuantity: Math.floor(Math.random() * 100)},
+  {title: 'Lemongrass Scented Oil', price: 11, description: 'It\'s not lemon, it\'s not grass - it\'s lemongrass. And it smells fantastic!', img: 'img/smell/4.jpg', inventoryQuantity: Math.floor(Math.random() * 100)},
   {title: 'Mint Scent', price: 9, description: 'Mint is the best. (Obviously.)', img: 'img/smell/5.jpg', inventoryQuantity: Math.floor(Math.random() * 100)},
   {title: 'White Rose Scent', price: 8, description: 'A rose by any other name would smell better in your box', img: 'img/smell/6.jpg', inventoryQuantity: Math.floor(Math.random() * 100)},
   {title: 'Sweet Cinammon Stick', price: 7, description: 'Let festive, calming cinammon scent spice up your day', img: 'img/smell/7.jpg', inventoryQuantity: Math.floor(Math.random() * 100)},
@@ -102,7 +102,7 @@ const products = [ [...boxProducts], [...sightProducts], [...smellProducts], [..
 const reviewContentArr = ['These people put the "uncomfortable" in comfort boxes', 'I sleep with this product under my pillow. Wonderful!', 'It\'s OK I guess', 'Some reviews are better than others', 'The rain in Spain stays mainly in the plains']
 
 const reviews = reviewContentArr.map(reviewContent => {
-  return {content: reviewContent, user_id: Math.floor(Math.random() * users.length)}
+  return {content: reviewContent}
 })
 
 
@@ -164,13 +164,13 @@ const seed = () =>
     ))
   )
 
-  // Getting an error on creating reviews, need to update reviews to use sequelize association methods
+  //Reviews is missing user and product detail, need to update for this.
 
-  // .then(() =>
-  //   Promise.all(reviews.map(review =>
-  //     Review.create(review)
-  //   ))
-  // )
+  .then(() =>
+    Promise.all(reviews.map(review =>
+      Review.create(review)
+    ))
+  )
 
   .then(() =>
     Promise.all(categories.map(category =>
