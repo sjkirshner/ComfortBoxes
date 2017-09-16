@@ -1,24 +1,26 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-// placeholder for thunk creator
-
+import { addUser } from '../store/users'
 //SIGN UP CONTAINER
-/**
+/*
  *
  * adds a user from the form to the User model
- *
- : <CategoryList />
- * displays product list corresponding to selected category: <ProductList />
  * redirect to login
- */
-export default class SignUp extends Component {
+ *
+*/
+export class SignUp extends Component {
   componentDidMount () {
-    // this.props.(name of thunk creator)
+    this.props.signup()
   }
 
   handleSubmit (event) {
     event.preventDefault()
-    console.log("Pressed submit. Good for you!")
+    const signupDetails = {
+      email: event.target.email.value,
+      password: event.target.password.value
+    }
+    this.props.signup(signupDetails)
+    console.log('Submitted a new user. Good for you!')
   }
 
   render () {
@@ -42,13 +44,12 @@ export default class SignUp extends Component {
   }
 }
 
-// function mapStateToProps(state){
-//   return {
-//     categories: state.categories,
-//   }
-// }
+const mapDispatch = { signup: addUser };
 
-// export default connect(
-//   null, null
-// //  {placeholder for post thunk creator}
-// )(SignUp);
+function mapStateToProps(state){
+  return {
+    users: state.users,
+  }
+}
+
+export default connect(mapStateToProps, mapDispatch)(SignUp);
