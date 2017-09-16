@@ -77,7 +77,7 @@ let touchCount = 0
  // Touches
  const touchProducts = ['Metallic Paint On A Page', 'Smooth Black Stone', 'Gold Foil', 'Angelite Stone', 'Translucent Quartz', 'Recycled Paper Texture', 'Silky Jasper', 'Rough Jasper'].map(title => {
   touchCount += 1
-  return {title: title, price: Math.floor(Math.random() * 15) + 4, description: title + ' feels great to touch! You shoud totally add this to your box!', img: '/img/sound/' + touchCount + '.jpg', inventoryQuantity: Math.floor(Math.random() * 100)}
+  return {title: title, price: Math.floor(Math.random() * 15) + 4, description: title + ' feels great to touch! You shoud totally add this to your box!', img: '/img/touch/' + touchCount.toString() + '.jpg', inventoryQuantity: Math.floor(Math.random() * 100)}
 })
 
 
@@ -86,13 +86,13 @@ let imgCount = 0
   // Tastes
 const tasteProducts = ['Chocolate Nibbles', 'Hibiscus Tea', 'Caramel Squares', 'Cinammon Crackers', 'Mint Tea', 'Choc-Covered Coffee Beans', 'Honey Roasted Peanuts', 'Fizzy Candy', 'Chai Loose Leaf'].map(title => {
   imgCount += 1
-  return {title: title, price: Math.floor(Math.random() * 4) + 4, description: title + ' is so delicious. You shoud totally add this to your box!', img: '/img/sound/' + imgCount + '.jpg', inventoryQuantity: Math.floor(Math.random() * 100)}
+  return {title: title, price: Math.floor(Math.random() * 4) + 4, description: title + ' is so delicious. You shoud totally add this to your box!', img: '/img/taste/' + imgCount.toString() + '.jpg', inventoryQuantity: Math.floor(Math.random() * 100)}
 })
 
 
   // Sounds
 const soundProducts = ['Calming', 'Magical', 'Soothing', 'Ethereal', 'Yoga', 'Trancey', 'Peppy', 'Rockful'].map(adj => {
-  return {title: adj + ' Music', price: 4, description: 'The most ' + adj[0].toLowerCase() + adj.slice(1) + ' music in the world.', img: '/img/sound/1.jpg', inventoryQuantity: Math.floor(Math.random() * 100)}
+  return {title: adj + ' Music', price: 4, description: 'The most ' + adj[0].toLowerCase() + adj.slice(1) + ' music in the world.', img: '/img/sound/sound.png', inventoryQuantity: Math.floor(Math.random() * 100)}
 })
 
 
