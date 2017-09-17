@@ -3,7 +3,7 @@ import React, {Component} from 'react'
 import {Router} from 'react-router'
 import {Route, Switch} from 'react-router-dom'
 import { Navbar, TestPage } from './components'
-import { BuildBox, SignUp } from './containers'
+import { BuildBox, SignUp, Home } from './containers'
 
 /**
  * COMPONENT
@@ -21,9 +21,7 @@ export default class Routes extends Component {
               render={()=><TestPage pageName={'Checkout Page'}/>} />
             <Route path='/buildbox' component={BuildBox} />
             <Route path='/signup' component={SignUp} />
-            <Route
-              path='/'
-              render={()=><TestPage pageName={'Home Page'}/>} />
+            <Route path='/' component={Home}/>
           </Switch>
         </div>
       </Router>
