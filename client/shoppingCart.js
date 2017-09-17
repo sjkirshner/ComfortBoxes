@@ -60,17 +60,23 @@ function removeBoxFromShoppingCart(boxId) {
 
 //removes all quantities of this product from this box
 function removeAllOfThisProductFromBox(productId, boxId) {
+  if (!boxId){
+    boxId = localStorage.getItem('currentBoxId');
+  }
   const productsInBox = localStorage.getItem(`box${boxId}ProductIds`);
-  const productsSansTheRemoved = productsInBox.split(',').map(id => {
+  const productsSansTheRemoved = [];
+  productsInBox.split(',').forEach(id => {
     if (id != productId) {
-      return id
-    }
-  }).join(',')
+      productsSansTheRemoved.push(id)
+    }})
   localStorage.setItem(`box${boxId}ProductIds`, productsSansTheRemoved);
 }
 
 //removes only one quantity of this product from this box
 function removeOneInstanceOfProductFromBox(productId, boxId) {
+  if (!boxId) {
+    boxId = localStorage.getItem('currentBoxId');
+  }
   const productsInBox = localStorage.getItem(`box${boxId}ProductIds`);
   const length = ('' + productId).length + 1
   const index = productsInBox.indexOf(productId) - 1
