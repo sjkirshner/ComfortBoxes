@@ -30,16 +30,19 @@ function Products ({category}) {
 
   const addProductToCart = function (event) {
     event.preventDefault()
-    console.log(event.target.name)
-    if (category.title === 'Box') {
-      //const shoppingCart = getCopyOfShoppingCart()
-      // Need to add functionality to prevent user from selecting more than one box per box using currentBox attribute of shopping cart. This may or may not happen here.
-      createBoxInShoppingCart(event.target.name)
-    } else {
+    const shoppingCart = getCopyOfShoppingCart()
+    const currentBox = localStorage.getItem('currentBoxId')
+    console.log(shoppingCart, currentBox)
+    if (shoppingCart[currentBox] && category.title === 'Box'){
+      console.error('Only one box per box!')
+    } else if (shoppingCart[currentBox] || category.title === 'Box') {
       addProductToBox(event.target.name)
+    } else {
+      console.error('Must select a box before other items!');
     }
-    console.log(getCopyOfShoppingCart())
+    console.log('shopping cart: ', getCopyOfShoppingCart())
   }
+
 
   return (
     <div className='productList'>

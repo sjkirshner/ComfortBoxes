@@ -5,6 +5,7 @@ import {
   ProductList,
   CategoryList,
 } from '../components';
+import { createBoxInShoppingCart } from '../shoppingCart'
 
 //BUILD BOX CONTAINER
 /**
@@ -21,9 +22,19 @@ import {
 //Need to add logic to default to 'Box' category when clicking 'BuildBox'
 
 export class BuildBox extends Component {
+  constructor(props) {
+    super(props)
+    this.createABox = this.createABox.bind(this)
+  }
+
   componentDidMount () {
     // fetch categories from DB
     this.props.fetchCategories();
+    this.createABox();
+  }
+
+  createABox() {
+    createBoxInShoppingCart()
   }
 
   render () {
