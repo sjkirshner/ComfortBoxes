@@ -29,12 +29,11 @@ Each time a new box is added, createBoxInShoppingCart() adds a new box{x}Product
 */
 
 
-//SARA: MAKE SURE TO DISCUSS THE SEMANTIC CHOICE OF PARAMETER BELOW BEING BASED ON VISITORS NOT BEING ALLOWED TO ORDER ANY OTHER ITEMS UNTIL THEY'VE SELECTED A BOX PRODUCT (AND NOT ALLOWED TO REMOVE BOX PRODUCT WITHOUT EITHER A: deleting the whole box OR B: replacing box selection with another box selection. (FOR SIMPLICITY'S SAKE, I'M LEANING TOWARDS CAN'T DELETE A BOX PRODUCT WITHOUT DELETING A BOX, THUS THEY'D JUST HAVE TO START THE BOX BUILDING PROCESS OVER WITH A DIFFERENT BOX SELECTION)
 
-//'Creates' a box in the shopping cart & makes that box the 'currentBox' (parameter is the box product's product id under the assumption that a box should be created in shopping cart when a box product is added by customer):
-function createBoxInShoppingCart(boxProductId){
+//'Creates' a box in the shopping cart & makes that box the 'currentBox':
+function createBoxInShoppingCart(){
   let boxId = 1 + (Number(localStorage.getItem('numberOfBoxes')));
-  localStorage.setItem(`box${boxId}ProductIds`, boxProductId)
+  localStorage.setItem(`box${boxId}ProductIds`, '')
   localStorage.setItem('numberOfBoxes', boxId);
   localStorage.setItem('currentBoxId', boxId)
 }
