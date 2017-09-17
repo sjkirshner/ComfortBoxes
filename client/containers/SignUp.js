@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import { addUser } from '../store/users'
+import AuthForm from '../components/AuthForm';
+import {auth, me} from '../store/user'
+
 //SIGN UP CONTAINER
 /*
  *
@@ -9,47 +11,47 @@ import { addUser } from '../store/users'
  *
 */
 export class SignUp extends Component {
-  componentDidMount () {
-    this.props.signup()
+  constructor (props) {
+    super(props);
+    this.state = {
+      method: '',
+    }
   }
 
-  handleSubmit (event) {
-    event.preventDefault()
-    const signupDetails = {
-      email: event.target.email.value,
-      password: event.target.password.value
-    }
-    this.props.signup(signupDetails)
-    console.log('Submitted a new user. Good for you!')
+  _login () {
+    this.setState({ method: 'login' });
+  }
+
+  _signin () {
+    this.setState({ method: 'signin' });
   }
 
   render () {
+    console.log(this.state.method)
     return (
-        <div>
-          <form onSubmit={this.handleSubmit.bind(this)} name={name}>
-            <div>
-              <label htmlFor='email'><small>Email</small></label>
-              <input name='email' type='text' />
-            </div>
-            <div>
-              <label htmlFor='password'><small>Password</small></label>
-              <input name='password' type='password' />
-            </div>
-            <div>
-              <button type='submit'>Submit</button>
-            </div>
-          </form>
-        </div>
+      <div>
+        <AuthForm
+          handleSubmit={this.props.handleSubmit}
+          method={this.state.method}>
+          <button type='button' onClick={this._login.bind(this)}>Log In</button>
+          <button type='button' onClick={this._signin.bind(this)}>Sign In</button>
+        </AuthForm>
+      </div>
     )
   }
 }
 
-const mapDispatch = { signup: addUser };
-
-function mapStateToProps(state){
+const mapDispatch = (dispatch) => {
   return {
-    users: state.users,
+    handleSubmit (evt) {
+      evt.preventDefault()
+      const formName = evt.target.name
+      const email = evt.target.email.value
+      const password = evt.target.password.value
+      dispatch(auth(email, password, formName))
+      .then(() => dispatch(me()));
+    }
   }
 }
 
-export default connect(mapStateToProps, mapDispatch)(SignUp);
+export default connect(null, mapDispatch)(SignUp);

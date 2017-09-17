@@ -20,7 +20,7 @@ export default class Routes extends Component {
               path='/login'
               render={()=><TestPage pageName={'Login Page'}/>} />
             <Route path='/buildbox' component={BuildBox} />
-            <Route exact path='/signup' component={SignUp} />
+            <Route path='/signup' component={SignUp} />
             <Route
               path='/'
               render={()=><TestPage pageName={'Home Page'}/>} />
