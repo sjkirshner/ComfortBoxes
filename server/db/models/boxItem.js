@@ -24,7 +24,7 @@ const BoxItem = db.define('boxItem', {
 //BoxItem table has 2 foreign keys: order_id and product_id, but is not referenced in other tables
 module.exports = BoxItem
 
-// When the same item is added to a box more than once, these items will count as one instance of that BoxItem, but productQuantityInBox and productPrice will both increase (if added using BoxItem methods below)
+
 
 /**
  * instanceMethods
@@ -35,11 +35,17 @@ module.exports = BoxItem
  * classMethods
  */
 
- //BoxItem.addProductsToBox is called by Order.addItemsToOrder and returns order that items were added to.
-BoxItem.addProductsToBox = function (arrayOfProductIds, order, boxId) {
+
+
+
+
+// // When the same item is added to a box more than once, these items will count as one instance of that BoxItem, but productQuantityInBox and productPrice will both increase (if added using BoxItem method below)
+
+ //BoxItem.storeOrderedItems is called by Order.createOrder and returns order that items are associated with.
+BoxItem.storeOrderedItems = function (arrayOfProductIds, order, boxId) {
   arrayOfProductIds.forEach((productId) => {
     const promiseArray = [
-      BoxItem.findOrCreate({
+      BoxItem.create({
         where: {
           order_id: order.id,
           boxId,
@@ -58,28 +64,7 @@ BoxItem.addProductsToBox = function (arrayOfProductIds, order, boxId) {
   return order;
 }
 
- //BoxItem.removeProductFromBox removes item from order and returns order that items were removed from.
-BoxItem.removeProductFromBox = function (productId, order, boxId) {
-  const promiseArray = [
-    BoxItem.findOne({
-      where: {
-        order_id: order.id,
-        boxId,
-        product_id: productId
-      }
-    }),
-    Product.findById(productId)
-  ]
-  Promise.all(promiseArray)
-    .spread((boxItem, product) => {
-      boxItem.productQuantityInBox -= 1;
-      boxItem.productPrice -= product.price;
-      boxItem.save();
-    })
-  return order;
-}
-
-
+//NOTE: I DELETED REMOVE PRODUCTS METHOD AND CHANGED store Ordered Items METHOD BECAUSE I realized that we won't use this functionality since we're not going to allow users to change their orders, only their shopping carts (so they can't add or remove items from order, they can only add or remove items from localStorage shopping cart BEFORE they order). We can retreive the older methods from prev git versions if need be, but I don't want them confusing us in the codebase.
 
 /**
  * hooks
