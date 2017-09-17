@@ -17,6 +17,9 @@ import {
  * mapDTP: brings in thunk that populates category list in DB
  *
  */
+
+//Need to add logic to default to 'Box' category when clicking 'BuildBox'
+
 export class BuildBox extends Component {
   componentDidMount () {
     // fetch categories from DB
