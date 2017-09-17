@@ -19,14 +19,12 @@ export default function AuthForm (props) {
         </div>
         <div>
           {children}
-          <button type='submit'>Submit</button>
         </div>
+        <button className='button-primary' type='submit'>Submit</button>
       </form>
-      <a href='/auth/google'>
+      <a id='google' href='/auth/google'>
        { method === 'login' ? 'Log In' : 'Sign In'} with Google
       </a>
     </div>
   )
 }
-// {error && error.response && <div> {error.response.data}
-// <form onSubmit={handleSubmit} name={name}

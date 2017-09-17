@@ -17,8 +17,8 @@ export default class Routes extends Component {
           <Switch>
             {/* Routes placed here are available to all visitors */}
             <Route
-              path='/login'
-              render={()=><TestPage pageName={'Login Page'}/>} />
+              path='/checkout'
+              render={()=><TestPage pageName={'Checkout Page'}/>} />
             <Route path='/buildbox' component={BuildBox} />
             <Route path='/signup' component={SignUp} />
             <Route

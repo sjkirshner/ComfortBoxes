@@ -13,8 +13,8 @@ export default function Navbar () {
       <Link to='/' className='navHome'>Home</Link>
       <div className='nav'>
         <Link to='/buildbox'>Build My Box</Link>
+        <Link to='/checkout'>Checkout</Link>
         <Link to='/signup'>Sign Up</Link>
-        <Link to='/login'>Login</Link>
       </div>
     </div>
   );

@@ -27,9 +27,8 @@ export class SignUp extends Component {
   }
 
   render () {
-    console.log(this.state.method)
     return (
-      <div>
+      <div id='authForm'>
         <AuthForm
           handleSubmit={this.props.handleSubmit}
           method={this.state.method}>
