@@ -9,6 +9,18 @@ module.exports = {
 }
 
 /*
+ITEMS IN STORAGE:
+
+localStorage.numberOfBoxes
+localStorage.currentBoxId
+
+POSSIBLE EXAMPLES OF localStorage.box{x}ProductIds
+localStorage.box1ProductIds
+localStorage.box2ProductIds
+localStorage.box3ProductIds
+*/
+
+/*
 NOTES FOR LOCAL STORAGE KEYS FORMATTED AS 'box{x}ProductIds':
 (example: 'box1ProductIds')
 Value of each of these keys is a list of the productIds that box holds, formatted as a string. Ex: '14,7,12,8'.
