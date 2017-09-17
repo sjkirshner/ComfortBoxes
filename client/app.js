@@ -8,7 +8,7 @@ import { BuildBox, SignUp, Home } from './containers'
 /**
  * COMPONENT
  */
-export default class Routes extends Component {
+export default class App extends Component {
   render () {
     return (
       <Router history={history}>
