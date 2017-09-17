@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
+import Products from './Products'
 
 /**
  * ProductList component:
@@ -25,21 +26,4 @@ export default function ProductList ({categories}) {
   );
 }
 
-function Products ({category}) {
-  console.log(category)
-  return (
-    <div className='productList'>
-      {
-        category.products.map(product => {
-          return (
-            <div key={product.id} className='product'>
-              <img src={product.img}/>
-              <div>{product.title}</div>
-              <button>Add</button>
-            </div>
-          )
-        })
-      }
-    </div>
-  );
-}
+
