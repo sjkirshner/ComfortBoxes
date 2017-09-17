@@ -1,18 +1,21 @@
-import React, {Component} from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
-
-export default class Navbar extends Component {
-  render () {
-    return (
-      <div className='navbar'>
-        <Link to='/' className='navHome'>Home</Link>
-        <div className='nav'>
-          <Link to='/buildbox'>Build My Box</Link>
-          <Link to='/signup'>Shopping Cart</Link>
-          <Link to='/login'>Login</Link>
-        </div>
+/**
+ * Navbar Component:
+ *   Renders the navbar
+ *
+ *   exported to /client/routes.js
+ */
+export default function Navbar () {
+  return (
+    <div className='navbar'>
+      <Link to='/' className='navHome'>Home</Link>
+      <div className='nav'>
+        <Link to='/buildbox'>Build My Box</Link>
+        <Link to='/signup'>Sign Up</Link>
+        <Link to='/login'>Login</Link>
       </div>
-    );
-  }
+    </div>
+  );
 }

@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 
 
-export default class Login extends Component {
+export default class TestPage extends Component {
   render () {
     return (
-      <div className='page'>
-        Login Page
+      <div>
+        {this.props.pageName}
       </div>
     );
   }
