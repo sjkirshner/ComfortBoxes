@@ -20,7 +20,7 @@ export default function App () {
             path='/checkout'
             component={Checkout} />
           <Route path='/buildbox' component={BuildBox} />
-          <Route path='/products/:id' component={ProductDetail} />
+          <Route exact path='/products/:id' component={Home} />
           <Route path='/login' component={SignUp} />
           <Route path='/' component={Home}/>
         </Switch>
