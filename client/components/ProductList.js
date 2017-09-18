@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { NavLink, Route, Switch } from 'react-router-dom';
 import { getCopyOfTempShoppingCart, addProductToBox } from '../shoppingCart'
 
 /**
@@ -29,12 +29,12 @@ export default function ProductList ({categories}) {
 
 function Products ({category}) {
 
-  const viewProductDetail = function (event) {
-    event.preventDefault()
-    console.log(this)
-  }
+  // const viewProductDetail = function (event) {
+  //   event.preventDefault()
+  //   console.log(this)
+  // }
 
-  this.viewProductDetail = this.viewProductDetail.bind(this)
+  // this.viewProductDetail = this.viewProductDetail.bind(this)
 
 
   const addAProductToBox = function (event) {
@@ -59,7 +59,9 @@ function Products ({category}) {
         category.products.map(product => {
           return (
             <div key={product.id} className='product'>
-              <img onClick={this.viewProductDetail} src={product.img}/>
+              <NavLink to={`/products/${product.id}`}>
+                <img src={product.img}/>
+              </NavLink>
               <div>{product.title}</div>
               <button name={product.id} onClick={addAProductToBox}>Add</button>
             </div>
@@ -70,4 +72,4 @@ function Products ({category}) {
   );
 }
 
-//<ProductDetail product={product} />
+

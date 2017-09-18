@@ -2,7 +2,7 @@ import history from './history';
 import React, {Component} from 'react'
 import {Router} from 'react-router'
 import {Route, Switch} from 'react-router-dom'
-import { TestPage, Cart, Checkout  } from './components'
+import { TestPage, Cart, Checkout, ProductDetail  } from './components'
 import { BuildBox, SignUp, Home, Navbar } from './containers'
 
 /**
@@ -18,8 +18,9 @@ export default function App () {
           <Route path='/cart' component={Cart} />
           <Route
             path='/checkout'
-            render={Checkout} />
+            component={Checkout} />
           <Route path='/buildbox' component={BuildBox} />
+          <Route path='/products/:id' component={ProductDetail} />
           <Route path='/login' component={SignUp} />
           <Route path='/' component={Home}/>
         </Switch>

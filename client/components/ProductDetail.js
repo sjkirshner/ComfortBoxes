@@ -3,7 +3,8 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { createBoxInShoppingCart,removeBoxFromShoppingCart, getCopyOfShoppingCart, addProductToBox } from '../shoppingCart'
 
-function ProductDetail ({product}) {
+function ProductDetail () {
+
 
   const addProductToCart = function (event) {
     // event.preventDefault()
