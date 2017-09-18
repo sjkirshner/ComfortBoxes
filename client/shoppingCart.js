@@ -35,10 +35,13 @@ Each time a new box is added, createBoxInShoppingCart() adds a new box{x}Product
 
 //'Creates' a box in the shopping cart & makes that box the 'currentBox':
 function createBoxInShoppingCart(){
+  console.log('numberOfBoxes', localStorage.getItem('numberOfBoxes'))
   let boxId = 1 + (Number(localStorage.getItem('numberOfBoxes')));
+  console.log('boxId', boxId)
   localStorage.setItem(`box${boxId}ProductIds`, '')
   localStorage.setItem('numberOfBoxes', boxId);
   localStorage.setItem('currentBoxId', boxId)
+  console.log('done')
 }
 
 //Stores the product in currently selected box:
