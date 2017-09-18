@@ -35,6 +35,7 @@ export class BuildBox extends Component {
 
   createABox() {
     createBoxInShoppingCart()
+    console.log('created box')
   }
 
   render () {
