@@ -55,6 +55,7 @@ function Products ({category}) {
 
 
 
+
   return (
     <div className='productList'>
       {
@@ -62,7 +63,11 @@ function Products ({category}) {
           return (
             <div key={product.id} className='product'>
 <<<<<<< HEAD
+<<<<<<< HEAD
               <img onClick={this.viewProductDetail} src={product.img}/>
+=======
+              <img src={product.img} />
+>>>>>>> master
 =======
               <img src={product.img} />
 >>>>>>> master
