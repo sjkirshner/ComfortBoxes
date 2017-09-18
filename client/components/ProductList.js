@@ -32,7 +32,6 @@ function Products ({category}) {
   const addAProductToBox = function (event) {
     const shoppingCart = getCopyOfTempShoppingCart()
     const currentBox = localStorage.getItem('currentBoxId')
-    console.log(shoppingCart, currentBox)
     if (shoppingCart[currentBox] && category.title === 'Box'){
       console.error('Only one box per box!')
     } else if ((shoppingCart[currentBox] && shoppingCart[currentBox].length <= 10) || category.title === 'Box') {

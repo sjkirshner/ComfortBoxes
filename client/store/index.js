@@ -4,15 +4,13 @@ import thunkMiddleware from 'redux-thunk'
 import categories from './categories'
 import users from './users'
 import currentUser from './user';
-import boxes from './boxes';
-import products from './products';
+import cart from './cart';
 
 const reducer = combineReducers({
   categories,
   users,
   currentUser,
-  boxes,
-  products });
+  cart });
 
 const middleware = applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
 const store = createStore(reducer, middleware)

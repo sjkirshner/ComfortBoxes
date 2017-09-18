@@ -1,24 +1,25 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 import { removeBoxFromShoppingCart, getCopyOfShoppingCart, removeOneInstanceOfProductFromBox } from '../shoppingCart'
-import { fetchProducts } from '../store/products'
+import { thunkGetCurrentCart } from '../store/cart'
 import { connect } from 'react-redux'
 
 export class Cart extends Component {
   constructor(props) {
     super(props)
-    this.officialCart = getCopyOfShoppingCart();
-    this.arrayOfBoxIds = Object.keys(this.officialCart).map(id => Number(id))
-    this.obj = {}
+    this.arrayOfBoxIds = Object.keys(this.props.cart).map(id => Number(id))
   }
 
   componentDidMount () {
-    this.arrayOfBoxIds.forEach(boxId => {
-      return this.props.getProducts(this.officialCart[boxId])
-        .then(() => {
-          this.obj[boxId] = this.props.products
-        })
-    })
+    this.props.thunkGetCurrentCart(getCopyOfShoppingCart());
+
+
+    // this.arrayOfBoxIds.forEach(boxId => {
+    //   return this.props.getProducts(this.officialCart[boxId])
+    //     .then(() => {
+    //       this.obj[boxId] = this.props.products
+    //     })
+    // })
 
     //for each id in box array, fetch products array, and pass that array into this.props.getProducts(ARRAY HERE)
   }
@@ -32,19 +33,23 @@ export class Cart extends Component {
    removeOneInstanceOfProductFromBox(productId, boxId)
   }
   render() {
-    console.log('obj: ', this.obj)
+    console.log('current cart: ', this.props.cart)
+    console.log('current cart keys: ', Object.keys(this.props.cart))
+
+    const cart = this.props.cart;
     return (
       <div>
         <h1>Shopping Cart</h1>
         {
-          this.arrayOfBoxIds.map((boxId, index) => (
+          Object.keys(cart).map((boxId, index) => (
             <div key={boxId}>
               <h2>Box #{index + 1}</h2>
-              <button onClick={() => this.deleteBox(boxId)}>Delete Box from Cart</button> {/* box# here is NOT boxId */}
+              <button onClick={() => this.deleteBox(boxId)}>Delete Box from Cart</button>
               {
-                this.obj[boxId].map((product, ind) => {
+                cart[boxId].map((product, ind) => {
                   return (
                     <div key={ind}>
+                      <h1>Sangooooow</h1>
                       <h4>Product {product.id}: {product.title}</h4>
                       <button onClick={() => this.deleteProduct(product.id, boxId)}>x</button>
                     </div>
@@ -64,15 +69,12 @@ export class Cart extends Component {
 
 function mapStateToProps (state) {
   return {
-    products: state.products
+    cart: state.cart
   }
 }
-function mapDispatchToProps (dispatch) {
-  return {
-    getProducts(idArray) {
-      dispatch(fetchProducts(idArray))
-    }
-  }
-}
+
 // this.props.getProducts()
-export default connect(mapStateToProps, mapDispatchToProps)(Cart)
+export default connect(
+  mapStateToProps,
+  {thunkGetCurrentCart}
+)(Cart)
