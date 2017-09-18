@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import AuthForm from '../components/AuthForm';
-import {auth, me} from '../store/user'
+import { AuthForm } from '../components';
+import { auth } from '../store/user'
 
 //SIGN UP CONTAINER
 /*
@@ -27,18 +27,24 @@ export class SignUp extends Component {
   }
 
   render () {
+    const error = this.props.currentUser.error;
+
     return (
       <div id='authForm'>
         <AuthForm
           handleSubmit={this.props.handleSubmit}
           method={this.state.method}>
           <button type='button' onClick={this._login.bind(this)}>Log In</button>
-          <button type='button' onClick={this._signin.bind(this)}>Sign In</button>
+          <button type='button' onClick={this._signin.bind(this)}>Sign Up</button>
+          <button className='button-primary' type='submit'>Submit</button>
+          { error ? <div className='errorMessage'>{error.response.data}. Please Try Again</div> : null }
         </AuthForm>
       </div>
     )
   }
 }
+
+const mapState = ({currentUser}) => ({currentUser});
 
 const mapDispatch = (dispatch) => {
   return {
@@ -48,9 +54,8 @@ const mapDispatch = (dispatch) => {
       const email = evt.target.email.value
       const password = evt.target.password.value
       dispatch(auth(email, password, formName))
-      .then(() => dispatch(me()));
     }
   }
 }
 
-export default connect(null, mapDispatch)(SignUp);
+export default connect(mapState, mapDispatch)(SignUp);

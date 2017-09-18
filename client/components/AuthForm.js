@@ -20,7 +20,6 @@ export default function AuthForm (props) {
         <div>
           {children}
         </div>
-        <button className='button-primary' type='submit'>Submit</button>
       </form>
       <a id='google' href='/auth/google'>
        { method === 'login' ? 'Log In' : 'Sign In'} with Google
