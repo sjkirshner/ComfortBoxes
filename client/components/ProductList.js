@@ -29,6 +29,14 @@ export default function ProductList ({categories}) {
 
 function Products ({category}) {
 
+  const viewProductDetail = function (event) {
+    event.preventDefault()
+    console.log(this)
+  }
+
+  this.viewProductDetail = this.viewProductDetail.bind(this)
+
+
   const addAProductToBox = function (event) {
     const shoppingCart = getCopyOfTempShoppingCart()
     const currentBox = localStorage.getItem('currentBoxId')
@@ -45,17 +53,6 @@ function Products ({category}) {
     console.log('temp shopping cart: ', getCopyOfTempShoppingCart())
   }
 
-  const viewProductDetail = function (event) {
-    event.preventDefault()
-    <Route
-      path={`/buildbox/${product.id}`}
-      render={() => <ProductDetail product={product} />}
-    />
-  }
-
-
-
-
   return (
     <div className='productList'>
       {
@@ -63,7 +60,6 @@ function Products ({category}) {
           return (
             <div key={product.id} className='product'>
               <img onClick={this.viewProductDetail} src={product.img}/>
-              <img src={product.img} />
               <div>{product.title}</div>
               <button name={product.id} onClick={addAProductToBox}>Add</button>
             </div>
@@ -73,3 +69,5 @@ function Products ({category}) {
     </div>
   );
 }
+
+//<ProductDetail product={product} />

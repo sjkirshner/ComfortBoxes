@@ -19,17 +19,17 @@ router.param('id', function (req, res, next, id) {
 // res.json array of products objects
 router.get('/', (req, res, next) => {
   Product.findAll()
-    .then(products => {
-      res.json(products)
-    })
-    .catch((err) => console.error(err));
+  .then(products => {
+    res.json(products)
+  })
+  .catch((err) => console.error(err));
 })
 
 // GET /api/products/:id
 router.get('/:id', (req, res, next) => {
-  Product.findById({id: req})
-    .then(product => {
-      res.json(product)
-    })
-    .catch((err) => console.error(err));
+  Product.findById(req.params.id)
+  .then(product => {
+    res.json(product)
+  })
+  .catch((err) => console.error(err));
 })
