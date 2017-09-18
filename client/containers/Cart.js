@@ -41,8 +41,10 @@ export class Cart extends Component {
       <div>
         <h1>Shopping Cart</h1>
         {
-          Object.keys(cart).map((boxId, index) => (
-            <div key={boxId}>
+          Object.keys(cart).map((boxId, index) => {
+            console.log('cart2', cart['2']);
+            return (
+              <div key={boxId}>
               <h2>Box #{index + 1}</h2>
               <button onClick={() => this.deleteBox(boxId)}>Delete Box from Cart</button>
               {
@@ -59,7 +61,7 @@ export class Cart extends Component {
               <hr />
               <br />
             </div>
-          ))
+          )})
         }
         <Link to={'/checkout'}>Checkout</Link>
       </div>
