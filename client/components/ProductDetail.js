@@ -3,10 +3,11 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { createBoxInShoppingCart,removeBoxFromShoppingCart, getCopyOfShoppingCart, addProductToBox } from '../shoppingCart'
 
-function ProductDetail () {
+export default function ProductDetail ({product}) {
 
 
   const addProductToCart = function (event) {
+    console.log(event)
     // event.preventDefault()
     // const shoppingCart = getCopyOfShoppingCart()
     // const currentBox = localStorage.getItem('currentBoxId')

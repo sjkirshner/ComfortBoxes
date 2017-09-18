@@ -1,11 +1,19 @@
 const router = require('express').Router()
-const {Category} = require('../db/models')
+const {Category, Product} = require('../db/models')
 module.exports = router
 
 // GET /api/categories/
 // res.json array of category objects (that have arrays of product objects attached to each)
 router.get('/', (req, res, next) => {
-  Category.findAll()
+  console.log('Made it to Category GET')
+  Category.findAll({
+    include: [{all: true}]
+    // [
+    //   {model: Product}
+    // ]
+  }
+
+    )
     .then(categories => {
       res.json(categories)
     })

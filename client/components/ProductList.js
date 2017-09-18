@@ -28,15 +28,7 @@ export default function ProductList ({categories}) {
 
 
 function Products ({category}) {
-
-  // const viewProductDetail = function (event) {
-  //   event.preventDefault()
-  //   console.log(this)
-  // }
-
-  // this.viewProductDetail = this.viewProductDetail.bind(this)
-
-
+  console.log(category)
   const addAProductToBox = function (event) {
     const shoppingCart = getCopyOfTempShoppingCart()
     const currentBox = localStorage.getItem('currentBoxId')

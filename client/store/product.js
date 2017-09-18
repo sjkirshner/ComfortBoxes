@@ -4,7 +4,7 @@ import axios from 'axios'
 /**
  * ACTION TYPES
  */
-const GET_PRODUCT_WITH_CATS = 'GET_PRODUCT_WITH_CATS'
+const GET_PRODUCT = 'GET_PRODUCT'
 
 /**
  * INITIAL STATE
@@ -14,26 +14,24 @@ const currentProduct = {}
 /**
  * ACTION CREATORS
  */
-const getProductWithCats = product => ({type: GET_PRODUCT_WITH_CATS, product})
+const getProduct = product => ({type: GET_PRODUCT, product})
 
 /**
  * THUNK CREATORS
  */
-export const fetchProductWithCats = () =>
+export const fetchProduct = id =>
   dispatch =>
-    axios.get('/auth/me')
+    axios.get(`/products/${id}`)
       .then(res =>
-        dispatch(getProductWithCats(res.data || currentProduct)))
+        dispatch(getProduct(res.data)))
       .catch(err => console.log(err))
-
-// NEED TO ADD FUNCTIONALITY TO BE ABLE TO QUERY THROUGH PRODUCT_CATEGORY TO GET A CATEGORIES BASED ON A PRODUCT REFERENCE.
 
 /**
  * REDUCER
  */
 export default function (state = currentProduct, action) {
   switch (action.type) {
-    case GET_PRODUCT_WITH_CATS:
+    case GET_PRODUCT:
       return action.product
     default:
       return state

@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
-const Category = require('./category')
+//const Category = require('./category')
 
 const Product = db.define('product', {
   title: {
@@ -37,13 +37,15 @@ const Product = db.define('product', {
     type: Sequelize.BOOLEAN,
     defaultValue: true
   },
-}, {
-  defaultScope: {
-    include: [
-      {model: Category}
-    ]
-  }
-})
+}
+// , {
+//   defaultScope: {
+//     include: [
+//       {model: Category}
+//     ]
+//   }
+// }
+)
 //Product table has no foreign keys, but can be referenced in Product_Category, Review, and BoxItem tables
 module.exports = Product
 
