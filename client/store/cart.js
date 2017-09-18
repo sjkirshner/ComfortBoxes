@@ -16,21 +16,29 @@ import axios from 'axios';
 const GET_CURRENT_CART = 'GET_CURRENT_CART';
 
 export function thunkGetCurrentCart (cart) {
-  let storeCart = {};
-  const arrayOfBoxIds = Object.keys(cart);
-  arrayOfBoxIds.forEach(boxId => {
-    storeCart[boxId] = [];
-    cart[boxId].forEach(productId => {
-      return axios.get(`/api/products/${productId}`)
-      .then(res => res.data)
-      .then(product => storeCart[boxId].push(product))
-    })
-  })
 
   return (dispatch, getState) => {
-    dispatch({
-      type: GET_CURRENT_CART,
-      cart: storeCart,
+
+    let storeCart = {};
+    const arrayOfBoxIds = Object.keys(cart);
+
+    const outerPromiseArray = arrayOfBoxIds.map(boxId => {
+      storeCart[boxId] = [];
+      const promiseArray = cart[boxId].map(productId => {
+        return axios.get(`/api/products/${productId}`)
+        .then(res => res.data)
+        .then(product => storeCart[boxId].push(product))
+      })
+
+      return Promise.all(promiseArray);
+    })
+
+    Promise.all(outerPromiseArray)
+    .then(() => {
+      dispatch({
+        type: GET_CURRENT_CART,
+        cart: storeCart,
+      })
     })
   }
 }

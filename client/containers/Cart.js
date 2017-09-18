@@ -12,37 +12,25 @@ export class Cart extends Component {
 
   componentDidMount () {
     this.props.thunkGetCurrentCart(getCopyOfShoppingCart());
-
-
-    // this.arrayOfBoxIds.forEach(boxId => {
-    //   return this.props.getProducts(this.officialCart[boxId])
-    //     .then(() => {
-    //       this.obj[boxId] = this.props.products
-    //     })
-    // })
-
-    //for each id in box array, fetch products array, and pass that array into this.props.getProducts(ARRAY HERE)
   }
 
   //note that as of yet, neither deleteBox or deleteProduct are re-rendering the page properly :( have to refresh. Fix this.
   deleteBox (boxId) {
-    removeBoxFromShoppingCart(boxId)
+    removeBoxFromShoppingCart(boxId);
+    this.props.thunkGetCurrentCart(getCopyOfShoppingCart());
   }
 
   deleteProduct (productId, boxId) {
-   removeOneInstanceOfProductFromBox(productId, boxId)
+    removeOneInstanceOfProductFromBox(productId, boxId);this.props.thunkGetCurrentCart(getCopyOfShoppingCart());
   }
-  render() {
-    console.log('current cart: ', this.props.cart)
-    console.log('current cart keys: ', Object.keys(this.props.cart))
 
+  render() {
     const cart = this.props.cart;
     return (
       <div>
         <h1>Shopping Cart</h1>
         {
           Object.keys(cart).map((boxId, index) => {
-            console.log('cart2', cart['2']);
             return (
               <div key={boxId}>
               <h2>Box #{index + 1}</h2>
@@ -51,9 +39,11 @@ export class Cart extends Component {
                 cart[boxId].map((product, ind) => {
                   return (
                     <div key={ind}>
-                      <h1>Sangooooow</h1>
-                      <h4>Product {product.id}: {product.title}</h4>
-                      <button onClick={() => this.deleteProduct(product.id, boxId)}>x</button>
+                      <h4>{product.title}</h4>
+                      <h4>${product.price}</h4>
+                      <img src={product.img} />
+                      <button
+                        onClick={() => this.deleteProduct(product.id, boxId)}>x</button>
                     </div>
                   )
                 })
