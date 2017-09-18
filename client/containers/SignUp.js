@@ -23,7 +23,7 @@ export class SignUp extends Component {
   }
 
   _signin () {
-    this.setState({ method: 'signin' });
+    this.setState({ method: 'signup' });
   }
 
   render () {
