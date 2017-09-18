@@ -62,15 +62,8 @@ function Products ({category}) {
         category.products.map(product => {
           return (
             <div key={product.id} className='product'>
-<<<<<<< HEAD
-<<<<<<< HEAD
               <img onClick={this.viewProductDetail} src={product.img}/>
-=======
               <img src={product.img} />
->>>>>>> master
-=======
-              <img src={product.img} />
->>>>>>> master
               <div>{product.title}</div>
               <button name={product.id} onClick={addAProductToBox}>Add</button>
             </div>

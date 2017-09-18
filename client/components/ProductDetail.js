@@ -28,7 +28,8 @@ function ProductDetail ({product}) {
       <div key={product.id} className='product'>
         <img src={product.img}/>
         <div>{product.title}</div>
-        <p>{product.description}</p>
+        <p>Description: {product.description}</p>
+        <p>Price: {product.price}</p>
         <button name={product.id} onClick={addProductToCart}>Add</button>
       </div>
     </div>
