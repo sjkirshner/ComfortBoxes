@@ -1,0 +1,39 @@
+#authForm {
+  width: 300px;
+  margin: 0 auto;
+  text-align: center;
+
+  input {
+    width: 90%;
+  }
+
+  button[type='button'] {
+    width: 40%;
+    margin: 10px;
+
+    &:focus {
+      background-color: #555;
+      color: $backgroundColor;
+    }
+  }
+
+  button[type='submit'] {
+    width: 90%;
+    margin-top: 5px;
+  }
+
+  .errorMessage {
+    color: red;
+  }
+
+  #google {
+    display: inline-block;
+    background-color: $googleColor;
+    width: 90%;
+    padding: 5px;
+    margin-top: 10px;
+    text-decoration: none;
+    border-radius: 10px;
+    color: white;
+  }
+}
