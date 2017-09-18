@@ -2,7 +2,7 @@ import history from './history';
 import React, {Component} from 'react'
 import {Router} from 'react-router'
 import {Route, Switch} from 'react-router-dom'
-import { Navbar, TestPage } from './components'
+import { Navbar, TestPage, Cart, Checkout } from './components'
 import { BuildBox, SignUp } from './containers'
 
 /**
@@ -16,6 +16,8 @@ export default class Routes extends Component {
           <Navbar />
           <Switch>
             {/* Routes placed here are available to all visitors */}
+            <Route path='/cart' component={Cart} />
+            <Route path='/checkout' component={Checkout} />
             <Route
               path='/login'
               render={()=><TestPage pageName={'Login Page'}/>} />

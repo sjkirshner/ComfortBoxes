@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { createBoxInShoppingCart, getCopyOfShoppingCart, addProductToBox } from '../shoppingCart'
+import { createBoxInShoppingCart, getCopyOfTempShoppingCart, addProductToBox } from '../shoppingCart'
 
 /**
  * ProductList component:
@@ -28,9 +28,8 @@ export default function ProductList ({categories}) {
 
 function Products ({category}) {
 
-  const addProductToCart = function (event) {
-    event.preventDefault()
-    const shoppingCart = getCopyOfShoppingCart()
+  const addAProductToBox = function (event) {
+    const shoppingCart = getCopyOfTempShoppingCart()
     const currentBox = localStorage.getItem('currentBoxId')
     console.log(shoppingCart, currentBox)
     if (shoppingCart[currentBox] && category.title === 'Box'){
@@ -40,8 +39,9 @@ function Products ({category}) {
     } else {
       console.error('Must select a box before other items!');
     }
-    console.log('shopping cart: ', getCopyOfShoppingCart())
+    console.log('temp shopping cart: ', getCopyOfTempShoppingCart())
   }
+
 
 
   return (
@@ -52,7 +52,7 @@ function Products ({category}) {
             <div key={product.id} className='product'>
               <img src={product.img}/>
               <div>{product.title}</div>
-              <button name={product.id} onClick={addProductToCart}>Add</button>
+              <button name={product.id} onClick={addAProductToBox}>Add</button>
             </div>
           )
         })
