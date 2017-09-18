@@ -46,6 +46,14 @@ function Products ({category}) {
     console.log('shopping cart: ', getCopyOfShoppingCart())
   }
 
+  const viewProductDetail = function (event) {
+    event.preventDefault()
+    <Route
+      path={`/buildbox/${product.id}`}
+      render={() => <ProductDetail product={product} />}
+    />
+  }
+
 
   return (
     <div className='productList'>
@@ -53,7 +61,7 @@ function Products ({category}) {
         category.products.map(product => {
           return (
             <div key={product.id} className='product'>
-              <img src={product.img}/>
+              <img onClick={this.viewProductDetail} src={product.img}/>
               <div>{product.title}</div>
               <button name={product.id} onClick={addProductToCart}>Add</button>
             </div>
