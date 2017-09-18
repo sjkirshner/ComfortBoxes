@@ -33,7 +33,7 @@ export const fetchProductWithCats = () =>
  */
 export default function (state = currentProduct, action) {
   switch (action.type) {
-    case GET_USER:
+    case GET_PRODUCT_WITH_CATS:
       return action.product
     default:
       return state
