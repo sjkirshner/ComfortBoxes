@@ -2,8 +2,8 @@ import history from './history';
 import React, {Component} from 'react'
 import {Router} from 'react-router'
 import {Route, Switch} from 'react-router-dom'
-import { TestPage, Cart, Checkout  } from './components'
-import { BuildBox, SignUp, Home, Navbar } from './containers'
+import { TestPage, Checkout  } from './components'
+import { BuildBox, SignUp, Cart, Home, Navbar } from './containers'
 
 /**
  * COMPONENT
@@ -16,9 +16,7 @@ export default function App () {
         <Switch>
           {/* Routes placed here are available to all visitors */}
           <Route path='/cart' component={Cart} />
-          <Route
-            path='/checkout'
-            render={Checkout} />
+          <Route path='/checkout' render={Checkout} />
           <Route path='/buildbox' component={BuildBox} />
           <Route path='/login' component={SignUp} />
           <Route path='/' component={Home}/>

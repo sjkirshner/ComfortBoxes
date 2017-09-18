@@ -23,6 +23,7 @@ export class Navbar extends Component {
         <Link to='/' className='navHome'>Home</Link>
         <div className='nav'>
           <Link to='/buildbox'>Build My Box</Link>
+          <Link to='/cart'>Cart</Link>
           <Link to='/checkout'>Checkout</Link>
           {
             currentUser.email
