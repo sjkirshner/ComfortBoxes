@@ -39,7 +39,6 @@ export class BuildBox extends Component {
   }
 
   render () {
-    console.log(this.props.categories);
     return (
       <div id='buildboxPage'>
         <CategoryList categories={this.props.categories} />
