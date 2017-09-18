@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom'
 import { fetchCategories } from '../store/categories';
 import {
   ProductList,
   CategoryList,
 } from '../components';
-import { createBoxInShoppingCart } from '../shoppingCart'
+import { createBoxInShoppingCart, getCopyOfTempShoppingCart, completeBox } from '../shoppingCart'
 
 //BUILD BOX CONTAINER
 /**
@@ -25,6 +26,11 @@ export class BuildBox extends Component {
   constructor(props) {
     super(props)
     this.createABox = this.createABox.bind(this)
+    this.completeBox = this.completeBox.bind(this)
+    this.state = {
+      redirectToCart: false,
+      redirectToHome: false
+    }
   }
 
   componentDidMount () {
@@ -38,12 +44,38 @@ export class BuildBox extends Component {
     console.log('created box')
   }
 
+  completeBox (redirectTo) {
+    const tempCart = getCopyOfTempShoppingCart();
+    const current = localStorage.getItem('currentBoxId')
+    if (tempCart[current]) {
+      completeBox()
+      if (redirectTo === 'toHome') {
+        this.setState({ redirectToHome: true });
+      } else if (redirectTo === 'toCart') {
+        this.setState({ redirectToCart: true });
+      }
+    } else {
+      console.error('Cannot complete box without a box product selected')
+    }
+  }
+
   render () {
-    console.log(this.props.categories);
+    if (this.state.redirectToCart) {
+      return (
+        <Redirect to={'/Cart'} />
+      )
+    }
+    if (this.state.redirectToHome) {
+      return (
+        <Redirect to={'/'} />
+      )
+    }
     return (
       <div id='buildboxPage'>
         <CategoryList categories={this.props.categories} />
         <ProductList categories={this.props.categories} />
+        <button onClick={() => this.completeBox('toHome')}>Add Box to Cart and Continue Shopping</button>
+        <button onClick={() => this.completeBox('toCart')}>Add Box to Cart and Go to Cart</button>
       </div>
     );
   }

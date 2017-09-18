@@ -5,7 +5,7 @@ const db = require('../index');
 const Category = db.model('category');
 const Product = db.model('product');
 
-describe.only('Category model', () => {
+describe('Category model', () => {
 
   beforeEach(() => {
     return db.sync({force: true})
