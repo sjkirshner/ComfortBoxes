@@ -24,13 +24,12 @@ export class Admin extends Component {
   handlePromote (evt) {
     axios.put(`/api/users/${evt.target.value}`)
     .then(res => res.data)
-    .then(console.log.bind(console))
-    this.props.getUsers();
+    .then(() => this.props.getUsers());
   }
 
   handleDelete (evt) {
-    axios.delete(`/api/users/${evt.target.value}`);
-    this.props.getUsers();
+    axios.delete(`/api/users/${evt.target.value}`)
+    .then(() => this.props.getUsers());
   }
 
   render () {
