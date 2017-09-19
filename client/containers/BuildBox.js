@@ -6,7 +6,7 @@ import {
   ProductList,
   CategoryList,
 } from '../components';
-import { createBoxInShoppingCart, getCopyOfTempShoppingCart, completeBox } from '../shoppingCart'
+import { getCopyOfTempShoppingCart, completeBox } from '../shoppingCart'
 
 //BUILD BOX CONTAINER
 /**
@@ -25,11 +25,11 @@ import { createBoxInShoppingCart, getCopyOfTempShoppingCart, completeBox } from 
 export class BuildBox extends Component {
   constructor(props) {
     super(props)
-    this.createABox = this.createABox.bind(this)
     this.completeBox = this.completeBox.bind(this)
     this.state = {
       redirectToCart: false,
-      redirectToHome: false
+      redirectToHome: false,
+      redirectToBuildBox: false
     }
   }
 
@@ -45,6 +45,8 @@ export class BuildBox extends Component {
       completeBox()
       if (redirectTo === 'toHome') {
         this.setState({ redirectToHome: true });
+      // if (redirectTo === 'toBuildBox') {
+      //   this.setState({ redirectToBuildBox: true });
       } else if (redirectTo === 'toCart') {
         this.setState({ redirectToCart: true });
       }
@@ -64,6 +66,12 @@ export class BuildBox extends Component {
         <Redirect to={'/'} />
       )
     }
+    if (this.state.redirectToHome) {
+      return (
+        <Redirect to={'/'} />
+      )
+    }
+
     return (
       <div id='buildboxPage'>
         <CategoryList categories={this.props.categories} />

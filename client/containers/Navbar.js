@@ -14,10 +14,10 @@ export class Navbar extends Component {
   constructor(props) {
     super(props)
     this.createABox = this.createABox.bind(this)
-    // this.showBuildBox = this.showBuildBox.bind(this)
-    // this.state = {
-    //   buildBoxHidden: true
-    // }
+    this.showBuildBox = this.showBuildBox.bind(this)
+    this.state = {
+      buildBoxHidden: true
+    }
   }
 
   componentDidMount () {
@@ -30,9 +30,9 @@ export class Navbar extends Component {
     console.log('created box')
   }
 
-  // showBuildBox () {
-  //   this.setState({buildBoxHidden: 'visible'})
-  // }
+  showBuildBox () {
+    this.setState({buildBoxHidden: 'visible'})
+  }
 
   render () {
     console.log('currentUser', this.props.currentUser)
@@ -40,11 +40,11 @@ export class Navbar extends Component {
 
     return (
       <div className='navbar'>
-        <Link to='/' className='navHome'>Home</Link>
+        <Link to='/' className='navHome' onClick={this.showBuildBox}>Home</Link>
         <div className='nav'>
-          <Link to='/buildbox/Box' onClick={this.createABox}>Build My Box</Link>
-          <Link to='/cart'>Cart</Link>
-          <Link to='/checkout'>Checkout</Link>
+          <Link to='/buildbox/Box' style={{visibility: this.state.buildBoxHidden}} onClick={this.createABox}>Build My Box</Link>
+          <Link to='/cart' onClick={this.showBuildBox}>Cart</Link>
+          <Link to='/checkout' onClick={this.showBuildBox}>Checkout</Link>
           {
             currentUser.email
               ? <a href='' onClick={handleLogout}>Sign Out</a>

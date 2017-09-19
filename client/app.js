@@ -2,8 +2,8 @@ import history from './history';
 import React, {Component} from 'react'
 import {Router} from 'react-router'
 import {Route, Switch} from 'react-router-dom'
-import { TestPage, Checkout, ProductDetail  } from './components'
-import { BuildBox, SignUp, Cart, Home, Navbar } from './containers'
+import { Checkout } from './components'
+import { BuildBox, SignUp, Cart, Home, Navbar, ProductDetail } from './containers'
 
 
 /**
