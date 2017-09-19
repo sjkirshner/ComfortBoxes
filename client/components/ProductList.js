@@ -28,7 +28,6 @@ export default function ProductList ({categories}) {
 
 
 function Products ({category}) {
-  console.log(category)
   const addAProductToBox = function (event) {
     const shoppingCart = getCopyOfTempShoppingCart()
     const currentBox = localStorage.getItem('currentBoxId')

@@ -19,12 +19,17 @@ const getProduct = product => ({type: GET_PRODUCT, product})
 /**
  * THUNK CREATORS
  */
-export const fetchProduct = id =>
-  dispatch =>
-    axios.get(`/products/${id}`)
-      .then(res =>
-        dispatch(getProduct(res.data)))
-      .catch(err => console.log(err))
+export const fetchProduct = id => dispatch =>
+{
+  console.log('ID plz?', id)
+  axios.get(`/products/${id}`)
+    .then(res => {
+      console.log("plz data?", res.data)
+      dispatch(getProduct(res.data))
+    })
+    .catch(err => console.log(err))
+}
+
 
 /**
  * REDUCER
