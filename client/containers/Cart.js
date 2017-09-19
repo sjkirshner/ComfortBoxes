@@ -70,8 +70,4 @@ function mapStateToProps (state) {
   }
 }
 
-// this.props.getProducts()
-export default connect(
-  mapStateToProps,
-  {thunkGetCurrentCart}
-)(Cart)
+export default connect(mapStateToProps, {thunkGetCurrentCart})(Cart)
