@@ -36,12 +36,6 @@ export class BuildBox extends Component {
   componentDidMount () {
     // fetch categories from DB
     this.props.fetchCategories();
-    this.createABox();
-  }
-
-  createABox() {
-    createBoxInShoppingCart()
-    console.log('created box')
   }
 
   completeBox (redirectTo) {

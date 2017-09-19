@@ -1,7 +1,8 @@
 
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import { createBoxInShoppingCart,removeBoxFromShoppingCart, getCopyOfShoppingCart, addProductToBox } from '../shoppingCart'
+import { browserHistory } from 'react-router'
+import { createBoxInShoppingCart,removeBoxFromShoppingCart, getCopyOfShoppingCart, getCopyOfTempShoppingCart, addProductToBox } from '../shoppingCart'
 import { fetchProduct } from '../store/product';
 import { connect } from 'react-redux';
 
@@ -13,25 +14,25 @@ export class ProductDetail extends React.Component {
 
   componentDidMount () {
     // fetch categories from DB
-    this.props.fetchProduct(this.props.match.params.id)   //
-    //console.log('Match.params', this.props.match.params.id)
+    this.props.fetchProduct(this.props.match.params.id)
   }
 
   addProductToCart (event) {
-    const shoppingCart = getCopyOfShoppingCart()
+    const shoppingCart = getCopyOfTempShoppingCart()
     const currentBox = localStorage.getItem('currentBoxId')
     const categoryTitle = this.props.product.categories[0].title
-    console.log(event.target.name)
+    console.log(categoryTitle)
+    console.log(localStorage.getItem('currentBoxId'))
     if (shoppingCart[currentBox] && categoryTitle === 'Box'){
-      console.error('Only one box per box!')
+      alert('Only one box per box!')
     } else if ((shoppingCart[currentBox] && shoppingCart[currentBox].length <= 10) || categoryTitle === 'Box') {
       addProductToBox(event.target.name)
     } else if (shoppingCart[currentBox] && shoppingCart[currentBox].length > 10) {
-        console.error('Only 10 items may be selected per box (excluding box itself). Create another box in order to select more items!')
+        alert('Only 10 items may be selected per box (excluding box itself). Create another box in order to select more items!')
     } else {
-      console.error('Must select a box before other items!');
+      alert('Must select a box before other items!');
     }
-    console.log('shopping cart: ', getCopyOfShoppingCart())
+    console.log('shopping cart: ', getCopyOfTempShoppingCart())
   }
 
   render () {
@@ -50,6 +51,9 @@ export class ProductDetail extends React.Component {
     );
   }
 }
+
+//*** Work in progress Back Button ****
+// <button name={this.props.product.id} onClick={browserHistory.goBack}>Back To Category Page</button>
 
 function mapStateToProps(state){
   return {
