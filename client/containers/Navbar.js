@@ -20,7 +20,11 @@ export class Navbar extends Component {
 
     return (
       <div className='navbar'>
-        <Link to='/' className='navHome'>Home</Link>
+        {
+          currentUser.isAdmin
+            ? <Link to='/admin' className='navHome'>Admin</Link>
+            : <Link to='/' className='navHome'>Home</Link>
+        }
         <div className='nav'>
           <Link to='/buildbox/Box'>Build My Box</Link>
           <Link to='/cart'>Cart</Link>

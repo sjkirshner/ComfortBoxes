@@ -13,10 +13,16 @@ router.get('/', (req, res, next) => {
     .catch(next)
 })
 
-
 router.post('/', (req, res, next) => {
   User.create(req.body)
   .then(user => res.json(user))
   .catch(next)
 })
 
+router.delete('/:id', (req, res, next) => {
+  User.destroy({
+    where: { id: req.params.id }
+  })
+  .then(res.json.bind(res))
+  .catch(next);
+})
