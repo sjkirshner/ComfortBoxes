@@ -31,7 +31,7 @@ export class Navbar extends Component {
           <Link to='/checkout'>Checkout</Link>
           {
             currentUser.email
-              ? <a href='' onClick={handleLogout}>Sign Out</a>
+              ? <a href='#' onClick={handleLogout}>Sign Out</a>
               : <Link to='/login'>Log In</Link>
           }
         </div>
