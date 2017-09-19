@@ -21,7 +21,8 @@ export class Cart extends Component {
   }
 
   deleteProduct (productId, boxId, category) {
-    if (category !== 'box'){
+    console.log('category: ', category)
+    if (category !== 'Box'){
       removeOneInstanceOfProductFromBox(productId, boxId);this.props.thunkGetCurrentCart(getCopyOfShoppingCart());
     } else {
       alert('Cannot delete box product from box.')
@@ -47,7 +48,7 @@ export class Cart extends Component {
                       <h4>${product.price}</h4>
                       <img src={product.img} />
                       <button
-                        onClick={() => this.deleteProduct(product.id, boxId, product.categories[0])}>x</button>
+                        onClick={() => this.deleteProduct(product.id, boxId, product.categories[0].title)}>x</button>
                     </div>
                   )
                 })
