@@ -21,10 +21,8 @@ const getProduct = product => ({type: GET_PRODUCT, product})
  */
 export const fetchProduct = id => dispatch =>
 {
-  console.log('ID plz?', id)
-  axios.get(`/products/${id}`)
+  axios.get(`/api/products/${id}`)
     .then(res => {
-      console.log("plz data?", res.data)
       dispatch(getProduct(res.data))
     })
     .catch(err => console.log(err))
