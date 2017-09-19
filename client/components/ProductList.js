@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { createBoxInShoppingCart, getCopyOfShoppingCart, addProductToBox } from '../shoppingCart'
+import { getCopyOfTempShoppingCart, addProductToBox } from '../shoppingCart'
 
 /**
  * ProductList component:
@@ -26,22 +26,24 @@ export default function ProductList ({categories}) {
   );
 }
 
+
 function Products ({category}) {
 
-  const addProductToCart = function (event) {
-    event.preventDefault()
-    const shoppingCart = getCopyOfShoppingCart()
+  const addAProductToBox = function (event) {
+    const shoppingCart = getCopyOfTempShoppingCart()
     const currentBox = localStorage.getItem('currentBoxId')
-    console.log(shoppingCart, currentBox)
     if (shoppingCart[currentBox] && category.title === 'Box'){
-      console.error('Only one box per box!')
-    } else if (shoppingCart[currentBox] || category.title === 'Box') {
+      alert('Only one box per box!');
+    } else if ((shoppingCart[currentBox] && shoppingCart[currentBox].length <= 10) || category.title === 'Box') {
       addProductToBox(event.target.name)
+    } else if (shoppingCart[currentBox] && shoppingCart[currentBox].length > 10) {
+        alert('Only 10 items may be selected per box (excluding box itself). Create another box in order to select more items!')
     } else {
-      console.error('Must select a box before other items!');
+      alert('Must select a box before other items!');
     }
-    console.log('shopping cart: ', getCopyOfShoppingCart())
+    console.log('temp shopping cart: ', getCopyOfTempShoppingCart())
   }
+
 
 
   return (
@@ -50,9 +52,9 @@ function Products ({category}) {
         category.products.map(product => {
           return (
             <div key={product.id} className='product'>
-              <img src={product.img}/>
+              <img src={product.img} />
               <div>{product.title}</div>
-              <button name={product.id} onClick={addProductToCart}>Add</button>
+              <button name={product.id} onClick={addAProductToBox}>Add</button>
             </div>
           )
         })
