@@ -91,6 +91,8 @@ function removeOneInstanceOfProductFromBox(productId, boxId) {
     boxId = localStorage.getItem('currentBoxId');
   }
   const productsInBox = localStorage.getItem(`box${boxId}ProductIds`);
+  console.log('productsInbox', productsInBox);
+
   const length = ('' + productId).length + 1
   const index = productsInBox.indexOf(productId) - 1
   if (productsInBox.length > length - 1){

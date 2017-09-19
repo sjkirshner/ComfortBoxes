@@ -1,7 +1,6 @@
 const router = require('express').Router()
 const HttpError = require('./HttpError');
 const {Product, Category} = require('../db/models')
-
 module.exports = router
 
 //The 'HttpError' function generates errors in the console, something to come back
@@ -35,10 +34,10 @@ router.get('/:id', (req, res, next) => {
     include: [{
       model: Category
     }]
-  }
-  )
+  })
   .then(product => {
     res.json(product)
   })
   .catch((err) => console.error(err));
 })
+
