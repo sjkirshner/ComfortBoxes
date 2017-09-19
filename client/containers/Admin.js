@@ -14,13 +14,21 @@ export class Admin extends Component {
   constructor (props) {
     super(props);
     this.handleDelete = this.handleDelete.bind(this);
+    this.handlePromote = this.handlePromote.bind(this);
   }
+
   componentDidMount () {
     this.props.getUsers();
   }
 
+  handlePromote (evt) {
+    axios.put(`/api/users/${evt.target.value}`)
+    .then(res => res.data)
+    .then(console.log.bind(console))
+    this.props.getUsers();
+  }
+
   handleDelete (evt) {
-    console.log(evt.target.value)
     axios.delete(`/api/users/${evt.target.value}`);
     this.props.getUsers();
   }
@@ -35,9 +43,13 @@ export class Admin extends Component {
             this.props.users.map(user => (
               <li key={user.id}>
                 {user.email}
+                {
+                  !user.isAdmin
+                    ? <button value={user.id} onClick={this.handlePromote}>PROMOTE</button> : null
+                }
                 <button
                   value={user.id}
-                  onClick={this.handleDelete}>Delete</button>
+                  onClick={this.handleDelete}>DELETE</button>
               </li>
             ))
           }
