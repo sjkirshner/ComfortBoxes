@@ -3,7 +3,7 @@ import React from 'react';
 
 export default function OrderComplete () {
   return (
-    <div>
+    <div id='completedOrderPage'>
       <h1>Your Order Has Been Submitted!</h1>
       <h3>Enjoy your new found comfort! </h3>
       <br />
