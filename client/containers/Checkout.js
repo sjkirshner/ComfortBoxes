@@ -59,23 +59,27 @@ export class Checkout extends Component {
       user = this.props.user.id;
     }
 
-    boxIds.forEach(boxId => {
-      axios.post('/api/orders/', {
+    const promises = boxIds.map(boxId => {
+      return axios.post('/api/orders/', {
         productIds: storageCart[boxId],
         userId: user,
         boxId: Number(boxId),
         shippingDetails: [address, city, state, email]
       })
     })
-    this.setState({
-      emailInput: '',
-      addressInput: '',
-      cityInput: '',
-      stateInput: ''
-    });
-    this.setState({
-      submitted: true
-    });
+
+    Promise.all(promises)
+      .then(() => {
+        this.setState({
+          emailInput: '',
+          addressInput: '',
+          cityInput: '',
+          stateInput: ''
+        });
+        this.setState({
+          submitted: true
+        });
+      })
   }
 
   render() {
