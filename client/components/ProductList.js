@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { NavLink, Route, Switch } from 'react-router-dom';
 import { getCopyOfTempShoppingCart, addProductToBox } from '../shoppingCart'
 
 /**
@@ -28,7 +28,6 @@ export default function ProductList ({categories}) {
 
 
 function Products ({category}) {
-
   const addAProductToBox = function (event) {
     const shoppingCart = getCopyOfTempShoppingCart()
     const currentBox = localStorage.getItem('currentBoxId')
@@ -36,6 +35,7 @@ function Products ({category}) {
       alert('Only one box per box!');
     } else if ((shoppingCart[currentBox] && shoppingCart[currentBox].length <= 10) || category.title === 'Box') {
       addProductToBox(event.target.name)
+      alert('Successfully added product to your box in progress.')
     } else if (shoppingCart[currentBox] && shoppingCart[currentBox].length > 10) {
         alert('Only 10 items may be selected per box (excluding box itself). Create another box in order to select more items!')
     } else {
@@ -44,15 +44,15 @@ function Products ({category}) {
     console.log('temp shopping cart: ', getCopyOfTempShoppingCart())
   }
 
-
-
   return (
     <div className='productList'>
       {
         category.products.map(product => {
           return (
             <div key={product.id} className='product'>
-              <img src={product.img} />
+              <NavLink to={`/products/${product.id}`}>
+                <img src={product.img}/>
+              </NavLink>
               <div>{product.title}</div>
               <button name={product.id} onClick={addAProductToBox}>Add</button>
             </div>
@@ -62,3 +62,5 @@ function Products ({category}) {
     </div>
   );
 }
+
+
