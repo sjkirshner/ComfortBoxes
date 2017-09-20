@@ -35,7 +35,7 @@ function Products ({category}) {
       alert('Only one box per box!');
     } else if ((shoppingCart[currentBox] && shoppingCart[currentBox].length <= 10) || category.title === 'Box') {
       addProductToBox(event.target.name)
-      alert('Successfully added product to your box in progress.')
+      alert('Successfully added product to your box in progress.')  //change to animation
     } else if (shoppingCart[currentBox] && shoppingCart[currentBox].length > 10) {
         alert('Only 10 items may be selected per box (excluding box itself). Create another box in order to select more items!')
     } else {

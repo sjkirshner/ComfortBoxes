@@ -32,8 +32,6 @@ Each time a new box is added, createBoxInShoppingCart() adds a new box{x}Product
  (Number(localStorage.getItem('numberOfBoxes'))) +1
 */
 
-
-
 //'Creates' a box in the shopping cart & makes that box the 'currentBox':
 function createBoxInShoppingCart(){
   console.log('numberOfBoxes', localStorage.getItem('numberOfBoxes'))
@@ -149,6 +147,7 @@ function getCopyOfTempShoppingCart() {
   (but note that it's only a representation of what is being stored,
   modifications to this object will not affect official shopping cart in local storage)
 */
+
 function getCopyOfShoppingCart() {
   let cart = {};
   const completedBoxIds = localStorage.getItem('completedBoxIds');
@@ -169,7 +168,6 @@ function getCopyOfShoppingCart() {
   })
   return cart;
 }
-
 
 function completeBox() {
   const currentBoxId = localStorage.getItem('currentBoxId')
