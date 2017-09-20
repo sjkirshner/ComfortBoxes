@@ -108,13 +108,19 @@ function removeOneInstanceOfProductFromBox(productId, boxId) {
   }
 }
 
-//changes current box so that added items will add to this box (run when customer selects a different previously created box to edit)
+//changes current box so that added items will add to this box
+// (run when customer selects a different previously created box to edit)
 function changeCurrentBox(newCurrentBoxId) {
   localStorage.setItem('currentBoxId', newCurrentBoxId);
 }
 
 
-// returns object version of the temp shopping cart (temp meaning all boxes that have been started are included-- not just those that have been completed), (but note that it's only a representation of what is being stored, modifications to this object will not affect temp shopping cart in local storage)
+/* returns object version of the temp shopping cart
+(temp meaning all boxes that have been started are included--
+  not just those that have been completed),
+  (but note that it's only a representation of what is being stored,
+  modifications to this object will not affect temp shopping cart in local storage)
+*/
 function getCopyOfTempShoppingCart() {
   let cart = {};
   const idsUsed = Number(localStorage.getItem('numberOfBoxes'));
@@ -137,7 +143,12 @@ function getCopyOfTempShoppingCart() {
   NOTE: The keys in the object are the box ids that exist in the cart. These are typically incremental from one, unless a customer has removed a box from their order (such as box 2 in the example object). The values of those keys are arrays of the productIds within that particular box.
 */
 
-// returns object version of the official shopping cart (official meaning only boxes that have been completed are included-- not any of those that have been started but not completed), (but note that it's only a representation of what is being stored, modifications to this object will not affect official shopping cart in local storage)
+/* returns object version of the official shopping cart
+(official meaning only boxes that have been completed are included--
+  not any of those that have been started but not completed),
+  (but note that it's only a representation of what is being stored,
+  modifications to this object will not affect official shopping cart in local storage)
+*/
 function getCopyOfShoppingCart() {
   let cart = {};
   const completedBoxIds = localStorage.getItem('completedBoxIds');
