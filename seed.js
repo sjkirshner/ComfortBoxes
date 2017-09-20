@@ -105,10 +105,40 @@ const reviews = reviewContentArr.map(reviewContent => {
   return {content: reviewContent}
 })
 
-const orders = []
-for (var i = 0; i < 40; i++) {
-  orders.push({status: ['created', 'processing', 'cancelled', 'completed'][Math.floor(Math.random() * 4)]})
-}
+const orders = [{
+  status: ['created', 'processing', 'cancelled', 'completed'][Math.floor(Math.random() * 4)],
+  address: '234 Hey St',
+  city: 'Los Angeles',
+  state: 'CA',
+  email: 'ttt@gmail.com'
+},{
+  status: ['created', 'processing', 'cancelled', 'completed'][Math.floor(Math.random() * 4)],
+  address: '3445 Hope St',
+  city: 'San Francisco',
+  state: 'CA',
+  email: 'tartr@gmail.com'
+},{
+  status: ['created', 'processing', 'cancelled', 'completed'][Math.floor(Math.random() * 4)],
+  address: '1133 Lafayette St',
+  city: 'San Diego',
+  state: 'CA',
+  email: 'aerhg@gmail.com'
+},{
+  status: ['created', 'processing', 'cancelled', 'completed'][Math.floor(Math.random() * 4)],
+  address: '89754 Wilshire St',
+  city: 'Los Angeles',
+  state: 'CA',
+  email: 'wtrbh@gmail.com'
+},{
+  status: ['created', 'processing', 'cancelled', 'completed'][Math.floor(Math.random() * 4)],
+  address: '234 Hey St',
+  city: 'Seattle',
+  state: 'WA',
+  email: 'yuts@gmail.com'
+}]
+// for (var i = 0; i < 5; i++) {
+//   orders.push({status: ['created', 'processing', 'cancelled', 'completed'][Math.floor(Math.random() * 4)]})
+// }
 
 // console.log("orders-test", orders)
 

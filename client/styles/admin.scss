@@ -1,0 +1,21 @@
+#adminPage {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 100px;
+
+  #orderList,
+  #userList {
+    margin: 3em 0;
+  }
+
+  #userList {
+    li {
+      list-style: none;
+    }
+    button {
+      margin-left: 10px;
+    }
+  }
+}

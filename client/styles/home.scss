@@ -1,0 +1,22 @@
+#homePage {
+  background-color: $backgroundColor;
+  height: 100vh;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  #welcome {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    width: 600px;
+    height: 600px;
+    background-image: url('/img/boxBG.jpg');
+    background-size: cover;
+    filter: opacity(60%);
+  }
+}

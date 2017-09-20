@@ -89,19 +89,32 @@ export class Checkout extends Component {
       )
     }
     return (
-      <div>
-        <h1>Checkout</h1>
+      <div id='checkoutPage'>
         <form onSubmit={this.handleSubmit}>
           <h3>Shipping Information</h3>
-          <h4>Email Address</h4>
-          <input  onChange={this.handleChange} value={this.state.emailInput} placeholder="Email" name="email" />
-          <h4>Address</h4>
-          <input  onChange={this.handleChange} value={this.state.addressInput} placeholder="Address" name="address" />
-          <h4>City</h4>
-          <input  onChange={this.handleChange} value={this.state.cityInput} placeholder="City" name="city" />
-          <h4>State</h4>
-          <input  onChange={this.handleChange} value={this.state.stateInput} placeholder="State" name="state" />
-          <button type="submit">Submit Shipping Info</button>
+          <label><small>Email Address</small></label>
+          <input
+            onChange={this.handleChange}
+            value={this.state.emailInput}
+            name="email" />
+          <label><small>Address</small></label>
+          <input
+            onChange={this.handleChange}
+            value={this.state.addressInput}
+            name="address" />
+          <label><small>City</small></label>
+          <input
+            onChange={this.handleChange}
+            value={this.state.cityInput}
+            name="city" />
+          <label><small>State</small></label>
+          <input
+            onChange={this.handleChange}
+            value={this.state.stateInput}
+            name="state" />
+          <div className='row u-full-width'>
+            <button className='twelve columns button-primary'type="submit">Submit Shipping Info</button>
+          </div>
         </form>
       </div>
     );
