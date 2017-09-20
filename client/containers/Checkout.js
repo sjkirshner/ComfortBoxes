@@ -4,7 +4,7 @@ import { getCopyOfShoppingCart, clearCart } from '../shoppingCart'
 import axios from 'axios';
 import { me } from '../store/user'
 import { connect } from 'react-redux'
-import { thunkGetCurrentCart } from '../store/cart'
+import { clearStoreCart } from '../store/cart'
 
 
 export class Checkout extends Component {
@@ -76,7 +76,7 @@ export class Checkout extends Component {
         });
 
         clearCart();
-        this.props.thunkGetCurrentCart(getCopyOfShoppingCart());
+        this.props.clearStoreCart();
 
         console.log('this.props.cart: ', this.props.cart)
 
@@ -122,58 +122,4 @@ function mapStateToProps (state) {
   }
 }
 
-export default connect(mapStateToProps, {me, thunkGetCurrentCart})(Checkout)
-
-
-
-
-
-
-
-
-
-
-// handleSubmit (event) {
-//   event.preventDefault()
-//   console.log('started')
-//   const email = this.state.emailInput;
-//   const address = this.state.addressInput;
-//   const city = this.state.cityInput;
-//   const state = this.state.stateInput;
-//   const storageCart = getCopyOfShoppingCart()
-//   const boxIds = Object.keys(storageCart);
-//   console.log('user', this.props.user)
-//   let user = null;
-//   if (Object.keys(this.props.user).length) {
-//     user = this.props.user.id;
-//   }
-
-//   const promises = boxIds.map(boxId => {
-//     return axios.post('/api/orders/', {
-//       productIds: storageCart[boxId],
-//       userId: user,
-//       boxId: Number(boxId),
-//       shippingDetails: [address, city, state, email]
-//     })
-//   })
-
-//   Promise.all(promises)
-//     .then(() => {
-//       this.setState({
-//         emailInput: '',
-//         addressInput: '',
-//         cityInput: '',
-//         stateInput: ''
-//       });
-
-//       clearCart();
-//       this.props.thunkGetCurrentCart(getCopyOfShoppingCart());
-
-//       console.log('this.props.cart: ', this.props.cart)
-
-//       this.setState({
-//         submitted: true
-//       });
-//     })
-//     .catch(err => console.error(err))
-// }
+export default connect(mapStateToProps, {me, clearStoreCart})(Checkout)

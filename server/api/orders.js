@@ -11,16 +11,3 @@ router.post('/', (req, res, next) => {
   res.sendStatus(201);
 })
 
-
-
-// // POST /api/orders/
-// router.post('/', (req, res, next) => {
-//   const {productIds, userId, boxId, shippingDetails} = req.body
-
-//   //shipping details should be an array structured as [address, city, state, email]
-//   console.log('sending: productIds, userId, sessionId, boxId, shippingDetails-- ', productIds, userId, boxId, shippingDetails)
-
-//   Order.createOrder(productIds, userId, req.sessionID, boxId, shippingDetails);
-// })
-
-
