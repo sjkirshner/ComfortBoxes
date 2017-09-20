@@ -4,4 +4,5 @@ export {default as SignUp} from './SignUp';
 export {default as Home} from './Home';
 export {default as Cart } from './Cart';
 export {default as Checkout } from './Checkout';
+export {default as Admin } from './Admin';
 export {default as ProductDetail } from './ProductDetail';

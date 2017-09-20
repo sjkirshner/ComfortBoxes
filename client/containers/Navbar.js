@@ -41,7 +41,11 @@ export class Navbar extends Component {
 
     return (
       <div className='navbar'>
-        <Link to='/' className='navHome'>Home</Link>
+        {
+          currentUser.isAdmin
+            ? <Link to='/admin' className='navHome'>Admin</Link>
+            : <Link to='/' className='navHome'>Home</Link>
+        }
         <div className='nav'>
           {!this.props.location.pathname.includes('buildbox') &&
             <Link to='/buildbox/Box' onClick={this.createABox}>Build My Box</Link>
@@ -50,7 +54,7 @@ export class Navbar extends Component {
           <Link to='/checkout'>Checkout</Link>
           {
             currentUser.email
-              ? <a href='' onClick={handleLogout}>Sign Out</a>
+              ? <a href='#' onClick={handleLogout}>Sign Out</a>
               : <Link to='/login'>Log In</Link>
           }
         </div>

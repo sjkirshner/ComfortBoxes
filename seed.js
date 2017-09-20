@@ -17,11 +17,12 @@ const categories = [
 
 
 const users = [
-  {email: 'jorblgoo@joe.com', password: 'ruih3419r83y41W8r3y' },
-  {email: 'numphy@kex.com', password: 'cbphjds3812' },
-  {email: 'jim@magicness.com', password: 'equifbwejl3f5dmscsnds' },
-  {email: 'eternalfonz@man.com', password: 'fiekqubjwcdkwdnmflen2325' },
-  {email: 'minz@zorba.com', password: 'dycbJHjqdmbedk4nsj2' }
+  {email: 'jorblgoo@joe.com', password: 'ruih3419r83y41W8r3y', isAdmin: true },
+  {email: 'numphy@kex.com', password: 'cbphjds3812', isAdmin: true },
+  {email: 'jim@magicness.com', password: 'equifbwejl3f5dmscsnds', isAdmin: true },
+  {email: 'eternalfonz@man.com', password: 'fiekqubjwcdkwdnmflen2325', isAdmin: true },
+  {email: 'minz@zorba.com', password: 'dycbJHjqdmbedk4nsj2', isAdmin: true },
+  {email: 'test@test.com', password: '123', isAdmin: true }
 ]
 
 
