@@ -63,7 +63,6 @@ export class Checkout extends Component {
       axios.post('/api/orders/', {
         productIds: storageCart[boxId],
         userId: user,
-        sessionId: 34,                 //get session id
         boxId: Number(boxId),
         shippingDetails: [address, city, state, email]
       })
