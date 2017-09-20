@@ -14,8 +14,6 @@ export default function App () {
     <Router history={history}>
       <div>
         <Navbar />
-         <br>
-         <br>
         <Switch>
           {/* Routes placed here are available to all visitors */}
           <Route path='/orderComplete' component={OrderComplete} />
