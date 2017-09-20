@@ -1,10 +1,9 @@
 import history from './history';
-import React, {Component} from 'react'
+import React from 'react'
 import {Router} from 'react-router'
 import {Route, Switch} from 'react-router-dom'
 import { Checkout } from './components'
-import { BuildBox, SignUp, Cart, Home, Navbar, ProductDetail } from './containers'
-
+import { BuildBox, SignUp, Cart, Home, Navbar, Admin, ProductDetail } from './containers'
 
 /**
  * COMPONENT
@@ -15,7 +14,7 @@ export default function App () {
       <div>
         <Navbar />
         <Switch>
-          {/* Routes placed here are available to all visitors */}
+          <Route path='/admin' component={Admin} />
           <Route path='/cart' component={Cart} />
           <Route path='/checkout' render={Checkout} />
           <Route path='/buildbox' component={BuildBox} />
