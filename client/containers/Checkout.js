@@ -47,14 +47,22 @@ export class Checkout extends Component {
 
   handleSubmit (event) {
     event.preventDefault()
-    const {email, address, city, state} = this.state
+    const email = this.state.emailInput;
+    const address = this.state.addressInput;
+    const city = this.state.cityInput;
+    const state = this.state.stateInput;
     const storageCart = getCopyOfShoppingCart()
     const boxIds = Object.keys(storageCart);
+    // let user = null;
+    // if (Object.keys(this.props.user)) { // doesn't know what this is
+    //   user = this.props.user;
+    // }
+
     boxIds.forEach(boxId => {
       axios.post('/api/orders/', {
         productIds: storageCart[boxId],
-        userId: 1,                        //get user id if exists, else set to null
-        sessionId: 34,                    //get session id
+        userId: 1,
+        sessionId: 34,                 //get session id
         boxId: Number(boxId),
         shippingDetails: [address, city, state, email]
       })
@@ -101,7 +109,7 @@ export class Checkout extends Component {
 
 function mapStateToProps (state) {
   return {
-    cart: state.cart
+    user: state.user
   }
 }
 

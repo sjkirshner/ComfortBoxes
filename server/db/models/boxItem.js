@@ -62,6 +62,7 @@ but productQuantityInBox and productPrice will both increase
 // BoxItem.storeOrderedItems is called by Order.createOrder
 // and returns order that items are associated with.
 BoxItem.storeOrderedItems = function (arrayOfProductIds, order, boxId) {
+  console.log('getting in boxItem: arrayOfProductIds, order.id, boxId', arrayOfProductIds, order.id, boxId)
   arrayOfProductIds.forEach((productId) => {
     const promiseArray = [
       BoxItem.create({
