@@ -16,9 +16,7 @@ export class Home extends Component {
         <div id='welcome'>
           <h1><b>Welcome</b></h1>
           <h3><b>{this.props.currentUser.email || ''}</b></h3>
-          <h4>Find your comfort with a comfort box</h4>
-          <h5><b>Comfort boxes<b> are designed to ground you during times of stress by engaging all of your senses with the items <b>you<b> find most comforting</h5>
-        </div>
+      </div>
       </div>
     )
   }
