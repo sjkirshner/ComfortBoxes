@@ -51,7 +51,7 @@ export class BuildBox extends Component {
         this.setState({ redirectToCart: true });
       }
     } else {
-      console.error('Cannot complete box without a box product selected')
+      alert('Cannot complete box without a box product selected')
     }
   }
 
