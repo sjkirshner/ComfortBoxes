@@ -47,7 +47,7 @@ export class Navbar extends Component {
             : <Link to='/' className='navHome'>HOME</Link>
         }
         <div className='nav'>
-          {!this.props.location.pathname.includes('buildbox') &&
+          {(!this.props.location.pathname.includes('buildbox') && !this.props.location.pathname.includes('products')) &&
             <Link to='/buildbox/Box' onClick={this.createABox}>BUILD MY BOX</Link>
           }
           <Link to='/cart'>CART</Link>

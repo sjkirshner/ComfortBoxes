@@ -41,7 +41,7 @@ export class ProductDetail extends React.Component {
   render () {
     console.log("Render")
     return (
-      <div className='productList'>
+      <div id='detailsPage' className='productList'>
         <CategoryList categories={this.props.categories} />
         <div key={this.props.product.id} className='product'>
           <img src={this.props.product.img}/>
