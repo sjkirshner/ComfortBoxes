@@ -1,9 +1,15 @@
-const Sequelize = require('sequelize')
-const db = require('../db')
-const Product = require('./product')
-const Order = require('./order')
+const Sequelize = require('sequelize');
+const db = require('../db');
+const Product = require('./product');
+const Promise = require('bluebird')
 
-//BoxItem lists the items that have been ordered and categorizes them by their respective boxes.
+/*
+BoxItem lists the items that have been ordered and
+categorizes them by their respective boxes.
+
+It is essentially an Order_Product join table with
+additional information about the items in the order
+*/
 
 const BoxItem = db.define('boxItem', {
   boxId: {
@@ -11,7 +17,15 @@ const BoxItem = db.define('boxItem', {
   },
   productPrice: {
     type: Sequelize.INTEGER,
-    defaultValue: 0.00
+    defaultValue: 0.00,
+    get() {
+      // this getter changes price value from cents in database to dollars and cents as returned value when 'getting' Product.price
+      return this.getDataValue('productPrice') / 100;
+    },
+    set(cost) {
+       // this setter changes price value from dollars and cents being passed in to cents in database when 'setting' Product.price
+      this.setDataValue('productPrice', cost * 100);
+    }
   },
   productQuantityInBox: {
     type: Sequelize.INTEGER,
@@ -22,7 +36,7 @@ const BoxItem = db.define('boxItem', {
   }
 })
 //BoxItem table has 2 foreign keys: order_id and product_id, but is not referenced in other tables
-module.exports = BoxItem
+
 
 
 
@@ -39,18 +53,22 @@ module.exports = BoxItem
 
 
 
-// // When the same item is added to a box more than once, these items will count as one instance of that BoxItem, but productQuantityInBox and productPrice will both increase (if added using BoxItem method below)
+/* When the same item is added to a box more than once,
+these items will count as one instance of that BoxItem,
+but productQuantityInBox and productPrice will both increase
+(if added using BoxItem method below)
+*/
 
- //BoxItem.storeOrderedItems is called by Order.createOrder and returns order that items are associated with.
+// BoxItem.storeOrderedItems is called by Order.createOrder
+// and returns order that items are associated with.
 BoxItem.storeOrderedItems = function (arrayOfProductIds, order, boxId) {
+  console.log('getting in boxItem: arrayOfProductIds, order.id, boxId', arrayOfProductIds, order.id, boxId)
   arrayOfProductIds.forEach((productId) => {
     const promiseArray = [
       BoxItem.create({
-        where: {
           order_id: order.id,
           boxId,
           product_id: productId
-        }
       }),
       Product.findById(productId)
     ]
@@ -64,9 +82,8 @@ BoxItem.storeOrderedItems = function (arrayOfProductIds, order, boxId) {
   return order;
 }
 
-//NOTE: I DELETED REMOVE PRODUCTS METHOD AND CHANGED store Ordered Items METHOD BECAUSE I realized that we won't use this functionality since we're not going to allow users to change their orders, only their shopping carts (so they can't add or remove items from order, they can only add or remove items from localStorage shopping cart BEFORE they order). We can retreive the older methods from prev git versions if need be, but I don't want them confusing us in the codebase.
-
 /**
  * hooks
  */
 
+module.exports = BoxItem;
