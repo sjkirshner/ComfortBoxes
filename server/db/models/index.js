@@ -17,15 +17,17 @@ Product.hasMany(Review, {foreignKey: 'product_id'});
 Order.belongsTo(User, {foreignKey: 'user_id'});
 User.hasMany(Order, {foreignKey: 'user_id'});
 
-BoxItem.belongsTo(Product, {foreignKey: 'product_id'});
+BoxItem.belongsTo(Product, {foreignKey: 'boxItem_id'});
 Product.hasMany(BoxItem, {foreignKey: 'product_id'});
 
-BoxItem.belongsTo(Order, {foreignKey: 'order_id'});
+BoxItem.belongsTo(Order, {foreignKey: 'boxItem_id'});
 Order.hasMany(BoxItem, {foreignKey: 'order_id'});
 
 
 Category.belongsToMany(Product, {through: 'product_category', foreignKey: 'category_id'});
 Product.belongsToMany(Category, {through: 'product_category', foreignKey: 'product_id'});
+
+// Product.addScope('defaultScope', {include: [{model: Category}]}, {override: true}) //{through: 'product_category', })
 
 /**
  * We're exporting all of our models here, so that any time a module needs a model,
