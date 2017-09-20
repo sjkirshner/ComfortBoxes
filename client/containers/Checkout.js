@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import { Redirect } from 'react-router-dom';
 import { getCopyOfShoppingCart } from '../shoppingCart'
 import axios from 'axios';
+import { thunkGetCurrentCart } from '../store/cart'
+import { connect } from 'react-redux'
 
 
 export class Checkout extends Component {
@@ -103,4 +105,4 @@ function mapStateToProps (state) {
   }
 }
 
-export default connect(mapStateToProps, {thunkGetCurrentCart, createNewOrder})(Checkout)
+export default connect(mapStateToProps, {thunkGetCurrentCart})(Checkout)
