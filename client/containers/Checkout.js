@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { Redirect } from 'react-router-dom';
 import { getCopyOfShoppingCart } from '../shoppingCart'
 import axios from 'axios';
-import { thunkGetCurrentCart } from '../store/cart'
+import { me } from '../store/user'
 import { connect } from 'react-redux'
 
 
@@ -20,9 +20,9 @@ export class Checkout extends Component {
     this.handleChange = this.handleChange.bind(this)
   }
 
-  // componentDidMount () {
-  //   this.props.thunkGetCurrentCart(getCopyOfShoppingCart());
-  // }
+  componentDidMount () {
+    this.props.me();
+  }
 
   handleChange (event) {
     if (event.target.name === 'email') {
@@ -53,16 +53,16 @@ export class Checkout extends Component {
     const state = this.state.stateInput;
     const storageCart = getCopyOfShoppingCart()
     const boxIds = Object.keys(storageCart);
-    // let user = null;
-    // if (Object.keys(this.props.user)) { // doesn't know what this is
-    //   user = this.props.user;
-    // }
+    console.log('user', this.props.user)
+    let user = null;
+    if (Object.keys(this.props.user).length) { // doesn't know what this is
+      user = this.props.user.id;
+    }
 
     boxIds.forEach(boxId => {
       axios.post('/api/orders/', {
         productIds: storageCart[boxId],
-        userId: 1,
-        sessionId: 34,                 //get session id
+        userId: user,
         boxId: Number(boxId),
         shippingDetails: [address, city, state, email]
       })
@@ -109,8 +109,8 @@ export class Checkout extends Component {
 
 function mapStateToProps (state) {
   return {
-    user: state.user
+    user: state.currentUser
   }
 }
 
-export default connect(mapStateToProps, {thunkGetCurrentCart})(Checkout)
+export default connect(mapStateToProps, {me})(Checkout)

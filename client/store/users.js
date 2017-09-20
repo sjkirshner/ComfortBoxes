@@ -1,21 +1,11 @@
 import axios from 'axios';
 
 //Action
-const CREATE_USER = 'CREATE_USER'
+const CREATE_USER = 'CREATE_USER';
+const GET_USERS = 'GET_USERS';
 
 //Action Creator
 export const createUser = user => ({ type: CREATE_USER, user });
-
-//Reducer
-export default function(users = [], action){
-  switch (action.type){
-    case CREATE_USER:
-      return [action.user, ...users];
-
-    default:
-      return users;
-  }
-}
 
 //Thunk Creator
 export const addUser = user => dispatch => {
@@ -24,15 +14,29 @@ export const addUser = user => dispatch => {
   .catch(err => console.error(`Creating user: ${user} unsuccesful`, err));
 };
 
-// export function fetchUsers () {
-//   return (dispatch, getState) => {
-//     axios.get('/api/users')
-//       .then(res => res.data)
-//       .then(users => {
-//         dispatch({
-//           type: FETCH_USERS,
-//           users
-//         });
-//       })
-//   }
-// }
+export function getUsers () {
+  return dispatch => {
+    axios.get('/api/users')
+      .then(res => res.data)
+      .then(users => {
+        dispatch({
+          type: GET_USERS,
+          users
+        });
+      })
+  }
+}
+
+//Reducer
+export default function(users = [], action){
+  switch (action.type){
+    case CREATE_USER:
+      return [action.user, ...users];
+
+    case GET_USERS:
+      return action.users;
+
+    default:
+      return users;
+  }
+}
