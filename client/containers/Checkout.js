@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import { Redirect } from 'react-router-dom';
-import { getCopyOfShoppingCart } from '../shoppingCart'
+import { getCopyOfShoppingCart, clearCart } from '../shoppingCart'
 import axios from 'axios';
 import { me } from '../store/user'
 import { connect } from 'react-redux'
+import { clearStoreCart } from '../store/cart'
 
 
 export class Checkout extends Component {
@@ -45,8 +46,10 @@ export class Checkout extends Component {
 
   }
 
+
   handleSubmit (event) {
     event.preventDefault()
+    console.log('started')
     const email = this.state.emailInput;
     const address = this.state.addressInput;
     const city = this.state.cityInput;
@@ -55,20 +58,15 @@ export class Checkout extends Component {
     const boxIds = Object.keys(storageCart);
     console.log('user', this.props.user)
     let user = null;
-    if (Object.keys(this.props.user).length) { // doesn't know what this is
+    if (Object.keys(this.props.user).length) {
       user = this.props.user.id;
     }
 
-    const promises = boxIds.map(boxId => {
-      return axios.post('/api/orders/', {
-        productIds: storageCart[boxId],
-        userId: user,
-        boxId: Number(boxId),
-        shippingDetails: [address, city, state, email]
-      })
+    axios.post('/api/orders/', {
+      orderObj: storageCart,
+      userId: user,
+      shippingDetails: [address, city, state, email]
     })
-
-    Promise.all(promises)
       .then(() => {
         this.setState({
           emailInput: '',
@@ -76,11 +74,19 @@ export class Checkout extends Component {
           cityInput: '',
           stateInput: ''
         });
+
+        clearCart();
+        this.props.clearStoreCart();
+
+        console.log('this.props.cart: ', this.props.cart)
+
         this.setState({
           submitted: true
         });
       })
+      .catch(err => console.error(err))
   }
+
 
   render() {
     if (this.state.submitted) {
@@ -89,19 +95,32 @@ export class Checkout extends Component {
       )
     }
     return (
-      <div>
-        <h1>Checkout</h1>
+      <div id='checkoutPage'>
         <form onSubmit={this.handleSubmit}>
           <h3>Shipping Information</h3>
-          <h4>Email Address</h4>
-          <input  onChange={this.handleChange} value={this.state.emailInput} placeholder="Email" name="email" />
-          <h4>Address</h4>
-          <input  onChange={this.handleChange} value={this.state.addressInput} placeholder="Address" name="address" />
-          <h4>City</h4>
-          <input  onChange={this.handleChange} value={this.state.cityInput} placeholder="City" name="city" />
-          <h4>State</h4>
-          <input  onChange={this.handleChange} value={this.state.stateInput} placeholder="State" name="state" />
-          <button type="submit">Submit Shipping Info</button>
+          <label><small>Email Address</small></label>
+          <input
+            onChange={this.handleChange}
+            value={this.state.emailInput}
+            name="email" />
+          <label><small>Address</small></label>
+          <input
+            onChange={this.handleChange}
+            value={this.state.addressInput}
+            name="address" />
+          <label><small>City</small></label>
+          <input
+            onChange={this.handleChange}
+            value={this.state.cityInput}
+            name="city" />
+          <label><small>State</small></label>
+          <input
+            onChange={this.handleChange}
+            value={this.state.stateInput}
+            name="state" />
+          <div className='row u-full-width'>
+            <button className='twelve columns button-primary'type="submit">Submit Shipping Info</button>
+          </div>
         </form>
       </div>
     );
@@ -109,12 +128,11 @@ export class Checkout extends Component {
 }
 
 
-
-
 function mapStateToProps (state) {
   return {
-    user: state.currentUser
+    user: state.currentUser,
+    cart: state.cart
   }
 }
 
-export default connect(mapStateToProps, {me})(Checkout)
+export default connect(mapStateToProps, {me, clearStoreCart})(Checkout)

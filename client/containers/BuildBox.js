@@ -75,6 +75,8 @@ export class BuildBox extends Component {
     return (
       <div id='buildboxPage'>
         <CategoryList categories={this.props.categories} />
+        <button onClick={() => this.completeBox('toHome')}>Add Box to Cart and Continue Shopping</button>
+        <button onClick={() => this.completeBox('toCart')}>Add Box to Cart and Go to Cart</button>
         <ProductList categories={this.props.categories} />
         <button onClick={() => this.completeBox('toHome')}>Add Box to Cart and Continue Shopping</button>
         <button onClick={() => this.completeBox('toCart')}>Add Box to Cart and Go to Cart</button>

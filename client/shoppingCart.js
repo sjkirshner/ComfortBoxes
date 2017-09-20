@@ -7,7 +7,8 @@ module.exports = {
   changeCurrentBox,
   getCopyOfTempShoppingCart,  //all boxes, including those not completed
   getCopyOfShoppingCart, //only boxes that have been completed
-  completeBox
+  completeBox,
+  clearCart
 }
 
 /*
@@ -151,9 +152,13 @@ function getCopyOfTempShoppingCart() {
 function getCopyOfShoppingCart() {
   let cart = {};
   const completedBoxIds = localStorage.getItem('completedBoxIds');
-  const completedBoxIdsArray = completedBoxIds.split(',').map(boxId => {
-    return Number(boxId)
-  })
+
+  let completedBoxIdsArray = [];
+  if (completedBoxIds){
+    completedBoxIdsArray = completedBoxIds.split(',').map(boxId => {
+      return Number(boxId)
+    })
+  }
   completedBoxIdsArray.forEach((boxId) => {
     const str = localStorage.getItem(`box${boxId}ProductIds`)
     if (str) {
@@ -174,4 +179,10 @@ function completeBox() {
   } else {
     localStorage.setItem('completedBoxIds', currentBoxId)
   }
+}
+
+function clearCart(){
+  localStorage.clear()
+  localStorage.setItem('numberOfBoxes', '0');
+  localStorage.setItem('currentBoxId', '');
 }

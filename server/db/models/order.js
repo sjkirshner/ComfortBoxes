@@ -44,10 +44,10 @@ module.exports = Order
  * classMethods
  */
 
- //Order.createOrder creates a new order using info passed in from local storage cart and user info, and then passes along created order info to BoxItem.storeOrderedItems(). When calling this method, get boxId argument from shopping cart session data. Shipping details should be an array structured as [address, city, state, email].
-Order.createOrder = function (productIds, userId, sessionId, boxId, shippingDetails) {
+ //Order.createOrder creates a new order using info passed in from local storage cart and user info, and then passes along created order info to BoxItem.storeOrderedItems(). When calling this method, get orderObj argument from shopping cart session data. Shipping details should be an array structured as [address, city, state, email].
+Order.createOrder = function (orderObj, userId, sessionId, shippingDetails) {
   const [address, city, state, email] = shippingDetails;
-  console.log('getting in order model: address, city, state, email--- ', address, city, state, email)
+  const boxIds = Object.keys(orderObj);
     Order.create({
         user_id: userId,
         sessionId,
@@ -58,7 +58,10 @@ Order.createOrder = function (productIds, userId, sessionId, boxId, shippingDeta
         email
       })
       .then((newOrder) => {
-        BoxItem.storeOrderedItems(productIds, newOrder, Number(boxId))
+        boxIds.forEach((boxId) => {
+          const productIds = orderObj[boxId];
+          BoxItem.storeOrderedItems(productIds, newOrder, Number(boxId))
+        })
       })
 }
 

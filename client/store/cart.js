@@ -14,6 +14,17 @@
 import axios from 'axios';
 //TEMPLATE
 const GET_CURRENT_CART = 'GET_CURRENT_CART';
+const CLEAR_STORE_CART = 'CLEAR_STORE_CART';
+
+export function clearStoreCart () {
+  return (dispatch) => {
+    dispatch({
+      type: CLEAR_STORE_CART,
+      cart: {}
+    })
+  }
+}
+
 
 export function thunkGetCurrentCart (cart) {
 
@@ -47,7 +58,8 @@ export default function(state = {}, action){
   switch (action.type){
     case GET_CURRENT_CART:
       return action.cart;
-
+    case CLEAR_STORE_CART:
+      return action.cart;
     default:
       return state;
   }

@@ -1,0 +1,18 @@
+#checkoutPage {
+  padding-top: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  form {
+    font-size: 16px;
+    text-align: center;
+    margin-top: 50px;
+
+    input {
+      width: 90%;
+      height: 38px;
+    }
+  }
+}
