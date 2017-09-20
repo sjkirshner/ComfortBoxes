@@ -32,31 +32,34 @@ export class Cart extends Component {
   render() {
     const cart = this.props.cart;
     return (
-      <div>
-        <h1>Shopping Cart</h1>
+      <div id='cartPage'>
         {
-          Object.keys(cart).map((boxId, index) => {
-            return (
-              <div key={boxId}>
-              <h2>Box #{index + 1}</h2>
-              <button onClick={() => this.deleteBox(boxId)}>Delete Box from Cart</button>
+          Object.keys(cart).map((boxId, index) => (
+            <div className='boxItem' key={boxId}>
+              <div className='boxHead'>
+                <h4>Box {index + 1}</h4>
+                <button
+                  onClick={() => this.deleteBox(boxId)}>Delete Box</button>
+              </div>
+              <ul>
               {
                 cart[boxId].map((product, ind) => {
                   return (
-                    <div key={ind}>
-                      <h4>{product.title}</h4>
-                      <h4>${product.price}</h4>
+                    <li key={ind}>
                       <img src={product.img} />
+                      <div>{product.title}</div>
+                      <div>${product.price}</div>
                       <button
-                        onClick={() => this.deleteProduct(product.id, boxId, product.categories[0].title)}>x</button>
-                    </div>
+                        onClick={() => this.deleteProduct(product.id, boxId, product.categories[0].title)}>REMOVE</button>
+                    </li>
                   )
                 })
               }
+              </ul>
               <hr />
               <br />
             </div>
-          )})
+          ))
         }
         <Link to={'/checkout'}>Checkout</Link>
       </div>

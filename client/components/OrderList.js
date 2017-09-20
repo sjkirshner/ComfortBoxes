@@ -1,52 +1,38 @@
 import React from 'react';
-import { Link, NavLink, Route, Switch } from 'react-router-dom';
 
 /**
  * OrderList component:
  * Displays list of orders for reviewing by status and editing status category
  */
-export class OrderList extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
-  render () {
-    const statusCategories = ['created', 'processing', 'cancelled', 'completed']
-    return (
-      <div>
-        <div className='statusLinks'>
-        {
-          statusCategories.map((status, i) =>
-            <Link
-              key={i}
-              to={`/admin/orders${status}`}>
-              {status}
-            </Link>
-          )
-        }
-        </div>
-        <ul>
-            {
-              this.props.orders.map(order => (
-                <li key={order.id}>
-                  {order.status}
-                  {order.user_id || order.sessionId}
-                  {order.address}
-                  {order.city}
-                  {order.state}
-                  {order.email}
-                  <select value={order.id}>
-                    {statusCategories.map(statusCategory => (
-                      <option value={statusCategory}>{statusCategory}</option>
-                    ))}
-                  </select>
-                </li>
-              ))
-            }
-          </ul>
-      </div>
+export default function OrderList ({orders}) {
+  return (
+    <div id='orderList'>
+      <h4>Order List</h4>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Email</th>
+            <th>Address</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            orders.map((order,i) => (
+              <tr key={i}>
+                <td>{order.user_id}</td>
+                <td>{order.email}</td>
+                <td>{order.address} {order.city}, {order.state}</td>
+                <td>{order.status}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
     )
-  }
+
 }
 
 // function Orders ({status}) {
